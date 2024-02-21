@@ -11,6 +11,7 @@ function App() {
   const [hasLost,sethasLost] = useState(false);
   const [restart,setRestart] = useState(false);
   const [word,setWord] = useState("");
+  const [score, setScore] = useState(50);
   useEffect(()=>{
     async function fetchWord(){
       let resp = await randomwordapi();
@@ -23,10 +24,11 @@ function App() {
   }
   return (
     <div className="App">
-      <NavBar/>
+      <NavBar score = {score}/>
       <div className='wordle-body'>
-          <Words winner = {setisWinner} lost = {sethasLost} restart = {restart} fr = {setRestart} word = {word}/>
-           {(!iswinner && !hasLost)&& <KeyBoard/> }
+          <Words winner = {setisWinner} lost = {sethasLost} restart = {restart} fr = {setRestart} word = {word} func_score = {setScore}/>
+      </div>
+           {(!iswinner && !hasLost) && <KeyBoard className='keyboard'/> }
            {(iswinner || hasLost) && <div className='winner'>
               {iswinner && <div className='winner-text'>You have guessed the word correctly!!</div>}
               {hasLost && 
@@ -37,7 +39,6 @@ function App() {
                 }
               <button className='restart' onClick={handleRestart}>Guess Again ?</button>
            </div>}  
-      </div>
     </div>
   );
 }

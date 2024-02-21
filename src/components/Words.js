@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from 'react';
 import Word from "./Word";
+import Hints from "./Hints";
 
 
 export default function Words(props){
@@ -13,6 +14,9 @@ export default function Words(props){
     const [row, setRow] = useState(0);
     const [val, setVal] = useState(["","","","",""]);
     const [isGreen, setIsGreen] = useState(ini);
+   
+
+   
     function isAlphabetKeyCode(keyCode) {
         return (keyCode >= 65 && keyCode <= 90); 
     }
@@ -27,6 +31,7 @@ export default function Words(props){
         props.winner(false);
         props.lost(false);
         props.fr(false);
+        props.func_score(50);
     }
     function handleChange(e) 
     {
@@ -79,6 +84,10 @@ export default function Words(props){
                 {
                     isgreen[row][i] = 1;
                 }
+                else if(fword.indexOf(data[i])!=-1)
+                {
+                    isgreen[row][i] = 3;
+                }
                 else 
                 {
                     isgreen[row][i] = 2; 
@@ -86,6 +95,7 @@ export default function Words(props){
             }
             setIsGreen(isgreen);
             setRow(prevrow=>prevrow+1);
+            props.func_score(prevScore=>prevScore-10);
             setData("");
         }
     }
@@ -101,6 +111,9 @@ export default function Words(props){
         words.push(<Word val = {val[i]} isgreen = {isGreen[i]}></Word>);
     }
     return(
-        <div className="Words">{words}</div>
-    );  
+        <div className="hintandword">  
+            <div className="Words">{words}</div>
+            <Hints className = "hints" word={fword} restart = {props.restart} func_score = {props.func_score}></Hints>
+        </div>
+    );   
 }
