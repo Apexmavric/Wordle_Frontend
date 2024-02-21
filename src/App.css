@@ -1,9 +1,18 @@
 body{
   background-color: #333;
   /* height: 200px; */
+  z-index: 0;
+}
+.App{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: blue; */
+  /* height: 300px; */
+  /* height: ; */
 }
 
-.App{
+.UserPage{
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -26,6 +35,7 @@ body{
 } 
 .keyboard{
   /* background-color: brown; */
+  /* outline: 1px solid green; */
   width: 500px;
   padding: 10px;
   border: 1px solid white;
@@ -40,28 +50,31 @@ body{
 .navbar{
   /* background-color: aqua; */
   color: white;
-  padding-left : 70px;
-  padding-bottom: 10px;
+  /* padding-left : 70px; */
+  /* padding-bottom: 10px; */
   padding-top: 10px;
   font-size: 30px;
-  width: 80%;
+  /* width: 80%; */
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px  white ;
+  /* border: 1px  white ; */
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
+  position: relative;
+  /* outline: 1px salmon solid; */
+  width: 800px;
   /* margin-right: 20px; */
 }
 .title{
   font-weight: 80;
-  margin-right: 95%;
-  /* margin-top:40px; */
   position: absolute;
+  right: 130%;
+  /* margin-top:40px; */
+  /* position: absolute; */
 }
 .score{
-  margin-right: 200px;
-  font-size: 20px;
+  font-size: 15px;
   font-weight:100;
   margin-top: 7px;
 }
@@ -109,16 +122,18 @@ body{
 }
 .hintandword{
   display: flex;
-  justify-content: space-evenly;
-  margin-left: 15%;
+  justify-content:center;
+  align-items: center;
+  /* outline: 1px solid red; */
+  position: relative;
   /* background-color: blue; */
-  width: 800px;
 }
 .hintData{
   /* background-color: azure; */
+  z-index: 100;
   color: aliceblue;
   height: auto;
-  width: 300px;
+  width: 200px;
   text-align: left;
   padding: 20px;
   border-radius: 3px;
@@ -137,10 +152,85 @@ body{
   justify-content: center;
 }
 .hint-btn{
-  margin: 30px;
   padding: 5px;
   background-color: rgb(75, 181, 67);
   color: azure;
   width: 100px;
   border: 1px solid black;
+}
+.hints{
+  /* outline:5px solid red; */
+  position: absolute;
+  top: 0;
+  left: 120%;
+  margin-left: 10px;
+  margin-top: 22px; 
+}
+.login-container{
+  margin-top: 200px;
+  width: 300px;
+  /* background-color: black; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  /* display: flex;
+  flex-direction: coont;
+  justify-content: center; */
+}
+
+.submit-container{
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+}
+
+.login-btn{
+  margin: 5px;
+  /* margin-bo: 5px; */
+  font-size: 15px;
+  padding: 10px;
+  background-color: rgb(75, 181, 67);
+  color:whitesmoke;
+  font-weight: 50;
+  border: none;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+.signup-btn{
+  margin: 5px;
+  font-size: 15px;
+  padding: 10px;
+  background-color: rgb(43, 130, 231);
+  color:whitesmoke;
+  font-weight: 50;
+  border: none;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+.signup-btn:hover{
+  cursor: pointer;
+}
+.login-btn:hover{
+  cursor: pointer;
+}
+.username-input{
+  height: 30px;
+  margin-top: 20px;
+  border: none;
+  padding: 5px;
+  border-radius: 2px;
+  /* position: absolute; */
+}
+.password-input{
+  height: 30px;
+  margin-top: 10px;
+  padding: 5px;
+  border-radius: 2px;
+  border: none;
+}
+
+.header{
+  position: relative;
+  margin-top: 20px;
+  color: aliceblue;
 }

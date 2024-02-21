@@ -14,8 +14,7 @@ export default function Words(props){
     const [row, setRow] = useState(0);
     const [val, setVal] = useState(["","","","",""]);
     const [isGreen, setIsGreen] = useState(ini);
-   
-
+    const [useHint, setuseHint] = useState(false);
    
     function isAlphabetKeyCode(keyCode) {
         return (keyCode >= 65 && keyCode <= 90); 
@@ -32,6 +31,7 @@ export default function Words(props){
         props.lost(false);
         props.fr(false);
         props.func_score(50);
+        setuseHint(false);
     }
     function handleChange(e) 
     {
@@ -73,8 +73,15 @@ export default function Words(props){
             if(data === fword)
             {
                 props.winner(true);
+                if(useHint)
+                {   
+                    props.func_score(prevScore=>{
+                        console.log(prevScore * 0.6);
+                        return prevScore * 0.6;
+                    });
+                }
             }
-            if(row === 4)
+            else if(row === 4)
             {
                 props.lost(true);
             }
@@ -84,7 +91,7 @@ export default function Words(props){
                 {
                     isgreen[row][i] = 1;
                 }
-                else if(fword.indexOf(data[i])!=-1)
+                else if(fword.indexOf(data[i])!==-1)
                 {
                     isgreen[row][i] = 3;
                 }
@@ -95,7 +102,7 @@ export default function Words(props){
             }
             setIsGreen(isgreen);
             setRow(prevrow=>prevrow+1);
-            props.func_score(prevScore=>prevScore-10);
+            if(data !== fword)props.func_score(prevScore=>prevScore-10);
             setData("");
         }
     }
@@ -113,7 +120,7 @@ export default function Words(props){
     return(
         <div className="hintandword">  
             <div className="Words">{words}</div>
-            <Hints className = "hints" word={fword} restart = {props.restart} func_score = {props.func_score}></Hints>
+            <Hints  word={fword} restart = {props.restart} func_score = {props.func_score} usehint = {setuseHint}></Hints>
         </div>
     );   
 }
