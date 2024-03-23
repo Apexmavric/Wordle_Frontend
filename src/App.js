@@ -1,19 +1,26 @@
 import './App.css';
-import KeyBoard from './components/KeyBoard';
-import NavBar from './components/NavBar';
-import Words from './components/Words';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import randomwordapi from './components/Randomwordapi';
-import UserPage from './Pages/UserPage';
 import LoginPage from './Pages/LoginPage';
-import { Login, Route } from '@mui/icons-material';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import PlayerContextProvider from './context/PlayerContextProvider';
+import Menu from './Pages/MenuPage';
+import ProfilePage from './Pages/ProfilePage';
+import Multiplayer from './Pages/Multiplayer';
+import SinglePage from './Pages/SinglePage';
 function App() {
   return (
+    <PlayerContextProvider>
     <div className="App">
-      {/* <UserPage></UserPage> */}
-      <LoginPage/>
+      <BrowserRouter>
+        <Routes>
+            <Route path='/menu' element = {<Menu/>}></Route>
+            <Route path='/' element = {<LoginPage/>}></Route>
+            <Route path='/profile' element = {<ProfilePage/>}></Route>
+            <Route path='/single' element = {<SinglePage/>}></Route>
+            <Route path='/multi' element = {<Multiplayer/>}></Route>
+        </Routes>
+      </BrowserRouter>
     </div>
+    </PlayerContextProvider>
   );
 }
 
