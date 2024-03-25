@@ -4,6 +4,7 @@ import LeaderBoard from "../components/Leaderboard";
 import Buttons from "../components/Buttons";
 import SearchBar from "../components/Searchbar";
 // import Lead
+import Sidebar from "../SideBar";
 export default function Menu(){
     return(
         <div className="MenuPage">
@@ -11,6 +12,7 @@ export default function Menu(){
                 <div className="menu-title">Wordle</div>
                 <AccountDetails/>
             </div>
+            <Sidebar></Sidebar>
             <Buttons/>  
             <div className="leader-search-container">
              <LeaderBoard/>
