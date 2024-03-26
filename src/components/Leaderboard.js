@@ -3,6 +3,8 @@ import { FaRankingStar } from "react-icons/fa6";
 
 const LeaderBoard = () => {
     const [playerdetails, setPlayerdetails] = useState([]);
+    const [showfriends, setShowfriends] = useState(false);
+    const [friends, setFriends] = useState([]);
     const token = localStorage.getItem('token');
     useEffect(() => {
         const fetchDetails = async () => {
@@ -17,9 +19,24 @@ const LeaderBoard = () => {
             console.log(data);
             setPlayerdetails(data.playerDetails);
         }
+        const fetchFriends = async()=>{
+            const response = await fetch("http://localhost:5000/api/v1/player/friends", {
+                method: 'GET',
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const data = await response.json();
+            console.log(data);
+            setFriends(data.playerFriends);
+        }
+        fetchFriends();
         fetchDetails();
     }, [])
-    console.log(playerdetails);
+    const handleFriends = ()=>{
+        setShowfriends(prev => !prev);
+    }
     return (
         <div className="leaderboard-container">
         <table className="leaderboard">
@@ -27,6 +44,15 @@ const LeaderBoard = () => {
                     <div className="leaderboard-title">
                        <FaRankingStar />
                         <div>Rankings</div>
+                        <label className="show-friends-btn">
+                        <input
+                            type="checkbox"
+                            name="visibility"
+                            value="friends"
+                            onClick={handleFriends}
+                        />
+                        Show Friends Only
+                    </label>
                     </div>
                     <tr className="leaderboard-hr">
                         <th className="leaderboard-hc">Rank</th>
@@ -38,6 +64,18 @@ const LeaderBoard = () => {
                 <tbody className="table-body">
                     {
                         playerdetails && playerdetails.map((data,i)=>{
+                            if(showfriends)
+                            {   
+                                if(friends.includes(data.playerId))
+                                return (
+                                    <tr className="table-body-row">
+                                    <td className="table-data">{Number(i)+1}</td>
+                                    <td className="table-data">{data.playerName}</td>
+                                    <td className="table-data">{data.playerScore}</td>
+                                    </tr>
+                                )
+                            }
+                            else{
                             return (
                                 <tr className="table-body-row">
                                 <td className="table-data">{Number(i)+1}</td>
@@ -45,6 +83,7 @@ const LeaderBoard = () => {
                                 <td className="table-data">{data.playerScore}</td>
                             </tr>
                             );
+                            }
                         })
                     }
                 </tbody>

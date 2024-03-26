@@ -14,7 +14,6 @@ export default function Hints({word, restart, usehint}){
             {
                 const endpoint = `https://api.api-ninjas.com/v1/dictionary?word=${word}`;
                 const apiKey = 'ileVzLK6EHWk1NWu9XzKOw==VRmV6Ss2Mbc6fiL1';
-                console.log(word);
                 const headers = new Headers();
                 headers.append('X-Api-Key', apiKey);
                 const resp = await fetch(endpoint, {

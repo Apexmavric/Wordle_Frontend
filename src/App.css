@@ -74,20 +74,35 @@ body{
   /* gap : 10px; */
   padding: 10px;
 }
+.search-results:hover{
+  background-color: #615e5e;
+  
+}
 .search-results-name{
   position: relative;
   left: 10px;
   /* justify-content: center; */
 }
+/* .search-results-name:hover{
+} */
 .search-results-add{
   /* outline: 1px solid blue; */
+  transition: transform 0.3s ease;
   position: absolute;
   right: 40px;
+}
+.search-results-add:hover{
+  transform: scale(1.2);
+  cursor: pointer;
 }
 .search-results-remove{
   /* outline: 1px solid blue; */
   position: absolute;
   right: 10px;
+}
+.search-results-remove:hover{
+  transform: scale(1.2);
+  cursor: pointer;
 }
 .menu-navbar{
   /* background-color: aqua; */
@@ -120,7 +135,7 @@ body{
 .account-details-par{
   position: absolute;
   top:10px;
-  right:10px;
+  right:20px;
   /* outline:1px solid; */
   font-weight: 80;
   width: 250px;
@@ -131,14 +146,14 @@ body{
   align-items: center;
   user-select: none;
   /* border:1px solid; */
-  /* outline: 1px rgb(116, 113, 113)solid 
-   */
-  border: 1px rgb(116, 113, 113)solid;
+  /* outline: 1px rgb(116, 113, 113)solid  */
+  
   border-radius: 5px;
   /* color: aliceblue; */
 }
 .account-details{
   /* outline:1px solid red; */
+  border: 1px rgb(116, 113, 113)solid;
   width : 100%;
   display: flex;
   flex-direction: column;
@@ -290,11 +305,13 @@ body{
 } 
 .keyboard{
   /* background-color: brown; */
-  /* outline: 1px solid green; */
-  width: 500px;
+  /* outline: 5px solid green; */
+  width: 35%;
   padding: 10px;
   border: 1px solid white;
   border-radius: 3px;
+  position: absolute;
+  bottom: 100px;
 }
 
 .keyboard-row{
@@ -352,9 +369,11 @@ body{
 
 .winner{
   color: whitesmoke;
+  position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  bottom :10%;
   /* background-color: aqua; */
   height: 100px;
 }
@@ -365,9 +384,11 @@ body{
 }
 .wordle-body{
   display: flex;
+  /* outline: 1px solid red; */
+  position: absolute;
+  top:10%;
   /* background-color: aqua; */
   justify-content: center;
-  /* align-items: r; */
   width:100%;
   height: 440px;
 }
@@ -387,7 +408,8 @@ body{
   /* background-color: azure; */
   z-index: 100;
   color: aliceblue;
-  height: auto;
+  max-height: 300px;
+  overflow-y: scroll;
   width: 200px;
   text-align: left;
   padding: 20px;
@@ -398,6 +420,10 @@ body{
   position: absolute;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
+.hintD::-webkit-scrollbar{
+  display: none;
+}
+
 .Words{
   margin-bottom: 10px;
   margin-top: 2px;
@@ -551,4 +577,21 @@ body{
 
 .profile-image:hover{
   transform: scale(1.1); 
+}
+.show-friends-btn{
+  position: absolute;
+  right: 20px;
+}
+.timer{
+  position: absolute;
+  left: 300px;
+  height: 200px;
+  width: 200px;
+  /* outline : 1px solid red; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+  color: aliceblue;
+  font-weight: 10;
 }

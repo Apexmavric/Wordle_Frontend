@@ -23,8 +23,7 @@ const AccountDetails = () => {
     name = capitalizeFirstLetter(name);
     return (
         <div className='account-details-par'>
-            <div className="account-details" onClick={handleClick}>{name}
-            </div>
+            <div className="account-details" onClick={handleClick}>{name}</div>
             {showdetails && (<div className='account-options'>
                 <Link to = '/profile' className='acc-btn'>
                     <div style={{display:'flex',alignItems:'center'}}><RxAvatar /></div>

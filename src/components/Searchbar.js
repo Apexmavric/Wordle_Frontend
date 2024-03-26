@@ -32,13 +32,49 @@ const SearchBar=()=>{
         }
     }
     const handleSubmit = (e)=>{
-        // e.preventdefault();
         setVal('');
     }
-    const handleaddFriend = (id)=>{
-        
+    const handleaddFriend = async(name)=>{
+        try {
+            const response = await fetch("http://localhost:5000/api/v1/player/add", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(
+                    {
+                        name: name
+                    }
+                )
+            });
+            let data = await response.json();
+            console.log(data);
+            alert('Friend Added Successfully !!');
+        } catch (error) {
+            console.error(error);
+        }
     }
-    const handlremoveFriend = ()=>{
+    const handlremoveFriend = async(id)=>{
+        try {
+            const response = await fetch("http://localhost:5000/api/v1/player/delete", {
+                method: "DELETE",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(
+                    {
+                        id: id
+                    }
+                )
+            });
+            let data = await response.json();
+            console.log(data);
+            alert('Friend Removed Successfully !!');
+        } catch (error) {
+            console.error(error);
+        }
 
     }
     return(
@@ -54,7 +90,7 @@ const SearchBar=()=>{
                         <div className="search-results">
                             <RxAvatar />
                             <div className="search-results-name">{e.playerName}</div>
-                            <IoPersonAdd className="search-results-add" onClick={()=>{handleaddFriend(e.playerId)}} />
+                            <IoPersonAdd className="search-results-add" onClick={()=>{handleaddFriend(e.playerName)}} />
                             <IoPersonRemove className="search-results-remove" onClick={()=>{handlremoveFriend(e.playerId)}}/>
                         </div>)
                     })               
