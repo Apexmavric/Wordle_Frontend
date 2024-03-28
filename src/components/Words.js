@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useEffect } from 'react';
 import Word from "./Word";
 import Hints from "./Hints";
+import Verify from "./Verify";
 
 
 export default function Words(props){
-    const token = localStorage.getItem('token');
     const ini = [ [0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0],
@@ -22,135 +22,77 @@ export default function Words(props){
     }
     const fword = props.word;
     useEffect(() => {
-    if(props.restart)
-    {
-        setData("");
-        setRow(0);
-        setVal(["","","","",""]);
-        setIsGreen(ini);
-        props.winner(false);
-        props.lost(false);
-        props.fr(false);
-        props.func_score(50);
-        setuseHint(false);
-    }
-    function handleChange(e) 
-    {
-        const keyCode = e.keyCode;
-        if(props.winner === true || props.lost === true) return;
-        if(isAlphabetKeyCode(keyCode))
-        {   
-            const key = e.key.toUpperCase();
-            const id = key.charCodeAt(0) - 'A'.charCodeAt(0);
-            var ele = document.getElementById(id);
-            const updatedData = data + key;
-            if(data.length < 5)
-            {
-                setData(updatedData);
-                setVal(prevVal => {
-                    const newVal = [...prevVal];
-                    newVal[row] = updatedData; 
-                    return newVal;
-                });
-            }
-            ele.style.backgroundColor = 'grey';
-            setTimeout(() => {
-                ele.style.backgroundColor = '#333';
-            }, 170);
+        if (props.restart) {
+            setData("");
+            setRow(0);
+            setVal(["", "", "", "", ""]);
+            setIsGreen(ini);
+            props.winner(false);
+            props.lost(false);
+            props.fr(false);
+            setuseHint(false);
         }
-        else if(e.key === 'Backspace') {
-            if (data.length > 0) {
-                const newData = data.slice(0,-1);
-                setData(newData);
-                setVal(prevVal=>{
-                    const newVal = [...prevVal];
-                    newVal[row] = newData; 
-                    return newVal;
-                })
-            }
-        }
-        else if(e.key === 'Enter' && data.length === 5){
-
-            const verify = async()=>{
-                try{
-                   const resp = await fetch('http://localhost:5000/api/v1/game/verify', {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify(
-                        {
-                            word: data,
-                            time: 10,
-                            row:row
+    
+        async function handleChange(e) {
+            const keyCode = e.keyCode;
+            if (props.winner === true || props.lost === true) return;
+            if (isAlphabetKeyCode(keyCode)) {
+                const key = e.key.toUpperCase();
+                const id = key.charCodeAt(0) - 'A'.charCodeAt(0);
+                var ele = document.getElementById(id);
+                const updatedData = data + key;
+                if (data.length < 5) {
+                    setData(updatedData);
+                    setVal(prevVal => {
+                        const newVal = [...prevVal];
+                        newVal[row] = updatedData;
+                        return newVal;
+                    });
+                }
+                ele.style.backgroundColor = 'grey';
+                setTimeout(() => {
+                    ele.style.backgroundColor = '#333';
+                }, 170);
+            } else if (e.key === 'Backspace') {
+                if (data.length > 0) {
+                    const newData = data.slice(0, -1);
+                    setData(newData);
+                    setVal(prevVal => {
+                        const newVal = [...prevVal];
+                        newVal[row] = newData;
+                        return newVal;
+                    })
+                }
+            } else if (e.key === 'Enter' && data.length === 5) {
+                try {
+                    const respdata = await Verify(data, props.time, row);
+                    console.log(respdata);
+                    if (respdata.status === 'right') {
+                        props.winner(true);
+                    } else if (row === 4) {
+                        if (respdata.status !== 'right') {
+                            props.lost(true);
+                            props.setWord(respdata.word);
                         }
-                    )
-                });
-                const respdata = await resp.json();
-                if(respdata.status === 'right')
-                {
-                    props.winner(true);   
-                }
-                if(row === 4)
-                {
-                    if(respdata.status != 'right'){
-                        props.lost(true);
-                        props.setWord(respdata.word);
                     }
-                }
-                setData("");
-                setIsGreen(prev=>{
-                    const newArr = [...prev];
-                    newArr[row] = respdata.arr;
-                    return newArr;
-                });
-                setRow(prevrow=>prevrow+1);
-                }
-                catch(err){
-                    console.log(err);
+                    setIsGreen(prev => {
+                        const newArr = [...prev];
+                        newArr[row] = respdata.arr;
+                        return newArr;
+                    });
+                    setRow(prev => prev + 1);
+                    setData("");
+                } catch (error) {
+                    console.error(error);
                 }
             }
-            verify();
-            // if(data === fword)
-            // {
-            //     props.winner(true);
-            //     if(useHint)
-            //     {   
-            //         props.func_score(prevScore=>{
-            //             console.log(prevScore * 0.6);
-            //             return prevScore * 0.6;
-            //         });
-            //     }
-            // }
-            // else if(row === 4)
-            // {
-            //     props.lost(true);
-            // }
-            // for(let i = 0; i<fword.length; i++)
-            // {
-            //     if(data[i] === fword[i])
-            //     {
-            //         isgreen[row][i] = 1;
-            //     }
-            //     else if(fword.indexOf(data[i])!==-1)
-            //     {
-            //         isgreen[row][i] = 3;
-            //     }
-            //     else 
-            //     {
-            //         isgreen[row][i] = 2; 
-            //     }
-            // }
-            // if(data !== fword)props.func_score(prevScore=>prevScore-10);
         }
-    }
-    document.addEventListener('keydown', handleChange);
-    return () => {
-
-        document.removeEventListener('keydown', handleChange);
-    };
-}, [data,row,val,isGreen,props.restart]);
+    
+        document.addEventListener('keydown', handleChange);
+        return () => {
+            document.removeEventListener('keydown', handleChange);
+        };
+    }, [data, row, val, isGreen, props.restart]);
     const words = [];
     for(let i = 0; i<5; i++)
     {   

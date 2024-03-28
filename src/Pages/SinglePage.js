@@ -4,7 +4,7 @@ import NavBar from '../components/NavBar';
 import Words from '../components/Words';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import randomwordapi from '../components/Randomwordapi';
+import randomwordapi from '../components/Reset';
 import Timer from '../components/Timer';
 
 function UserPage() {
@@ -12,16 +12,16 @@ function UserPage() {
   const [hasLost,sethasLost] = useState(false);
   const [restart,setRestart] = useState(false);
   const [word,setWord] = useState("");
-  const [score, setScore] = useState(50);
+  const [time, setTime] = useState(0);
   function handleRestart(){
     setRestart(true);
   }
   return (
     <div className="UserPage">
-       <NavBar score = {score}/>
+       <NavBar score = {time}/>
       <div className='wordle-body'>
-          <Words winner = {setisWinner} lost = {sethasLost} restart = {restart} fr = {setRestart} setWord = {setWord} func_score = {setScore}/>
-          <Timer fr = {setRestart} restart = {restart}/>
+          <Words winner = {setisWinner} lost = {sethasLost} restart = {restart} fr = {setRestart} setWord = {setWord} time={time}/>
+          <Timer fr = {setRestart} restart = {restart} setTime={setTime} time={time} hasLost={hasLost}  sethasLost = {sethasLost} iswinner={iswinner} setWord = {setWord}/>
       </div>
            {(!iswinner && !hasLost) && <KeyBoard className='keyboard'/> }
            {(iswinner || hasLost) && <div className='winner'>

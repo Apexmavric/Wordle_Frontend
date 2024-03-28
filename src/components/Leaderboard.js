@@ -16,7 +16,7 @@ const LeaderBoard = () => {
                 }
             });
             const data = await response.json();
-            console.log(data);
+            // console.log(data);
             setPlayerdetails(data.playerDetails);
         }
         const fetchFriends = async()=>{
@@ -28,7 +28,7 @@ const LeaderBoard = () => {
                 }
             });
             const data = await response.json();
-            console.log(data);
+            // console.log(data);
             setFriends(data.playerFriends);
         }
         fetchFriends();

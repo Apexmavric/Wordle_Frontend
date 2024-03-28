@@ -6,6 +6,7 @@ import Menu from './Pages/MenuPage';
 import ProfilePage from './Pages/ProfilePage';
 import Multiplayer from './Pages/Multiplayer';
 import SinglePage from './Pages/SinglePage';
+import GameDetails from './Pages/GameDetails';
 function App() {
   return (
     <PlayerContextProvider>
@@ -17,6 +18,7 @@ function App() {
             <Route path='/profile' element = {<ProfilePage/>}></Route>
             <Route path='/single' element = {<SinglePage/>}></Route>
             <Route path='/multi' element = {<Multiplayer/>}></Route>
+            <Route path='/gamedetails' element = {<GameDetails/>}></Route>
         </Routes>
       </BrowserRouter>
     </div>

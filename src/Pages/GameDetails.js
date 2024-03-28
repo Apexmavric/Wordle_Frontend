@@ -3,22 +3,20 @@ import AccountDetails from "../components/AccountDetails";
 import LeaderBoard from "../components/Leaderboard";
 import Buttons from "../components/Buttons";
 import SearchBar from "../components/Searchbar";
-// import Lead
+import Games from "../components/Games";
 import Sidebar from "../components/SideBar";
-export default function Menu(){
+export default function GameDetails(){
     
     return(
-        <div className="MenuPage">
+            <div className="MenuPage">
             <div className="menu-navbar">
                 <div className="menu-title">Wordle</div>
                 <AccountDetails/>
             </div>
             <Sidebar></Sidebar>
-            <Buttons/>  
             <div className="leader-search-container">
-             <LeaderBoard/>
-             <SearchBar/>
+                <Games/>
             </div>       
-        </div>
+        </div>  
     );
 }
