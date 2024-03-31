@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { IoGameControllerOutline } from "react-icons/io5";
-const Games = ()=>{
+
+const Games = () => {
     const [gamedetails, setGamedetails] = useState([]);
     const token = localStorage.getItem('token');
+
     useEffect(() => {
         const fetchdetails = async () => {
             try {
@@ -23,16 +25,14 @@ const Games = ()=>{
         fetchdetails();
     }, []);
 
-
-    return(
+    return (
         <div className="leaderboard-container">
-        <table className="leaderboard">
+            <table className="leaderboard">
                 <thead className="leaderboard-head">
                     <div className="leaderboard-title">
                         <IoGameControllerOutline />
                         <div>Game History</div>
-                        <label className="show-friends-btn">
-                    </label>
+                        <label className="show-friends-btn"></label>
                     </div>
                     <tr className="leaderboard-hr">
                         <th className="leaderboard-hc">Date</th>
@@ -41,22 +41,20 @@ const Games = ()=>{
                     </tr>
                 </thead>
                 <div className="table-body-container">
-                <tbody className="table-body">
-                    {
-                        gamedetails && gamedetails.map((data,i)=>{
-                            return (
-                                <tr className="table-body-row">
+                    <tbody className="table-body">
+                        {gamedetails && gamedetails.map((data, i) => (
+                            <tr className="table-body-row" key={i}>
                                 <td className="table-data">{data.date}</td>
                                 <td className="table-data">{data.mode}</td>
-                                <td className="table-data">{data.score}</td>
+                                <td className="table-data" style={{ color: data.score > 0 ? 'green' : 'rgb(152, 152, 152)' }}>
+                                    {data.score}
+                                </td>
                             </tr>
-                            );
-                        })
-                    }
-                </tbody>
+                        ))}
+                    </tbody>
                 </div>
             </table>
-             </div>
+        </div>
     );
 }
 
