@@ -12,7 +12,7 @@ const SearchBar=()=>{
         setVal(e.target.value);
         console.log(e.target.value);
         try {
-            const response = await fetch("http://localhost:5000/api/v1/player/search", {
+            const response = await fetch(process.env.REACT_APP_BACKEND_URL +"/api/v1/player/search", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ const SearchBar=()=>{
     }
     const handleaddFriend = async(name)=>{
         try {
-            const response = await fetch("http://localhost:5000/api/v1/player/add", {
+            const response = await fetch(process.env.REACT_APP_BACKEND_URL +"/api/v1/player/add", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ const SearchBar=()=>{
     }
     const handlremoveFriend = async(id)=>{
         try {
-            const response = await fetch("http://localhost:5000/api/v1/player/delete", {
+            const response = await fetch(process.env.REACT_APP_BACKEND_URL +"/api/v1/player/delete", {
                 method: "DELETE",
                 headers: {
                     'Content-Type': 'application/json',

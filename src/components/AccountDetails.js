@@ -18,6 +18,7 @@ const AccountDetails = () => {
     const handleLogout = (e)=>{
         localStorage.removeItem('token');
         localStorage.removeItem('name');
+        localStorage.removeItem('socketId');
         navigate('/');
     }
     name = capitalizeFirstLetter(name);

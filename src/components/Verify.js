@@ -2,7 +2,7 @@ const Verify = async(data, time, row)=>{
     try{
         
         const token = localStorage.getItem('token');
-        const resp = await fetch('http://localhost:5000/api/v1/game/verify', {
+        const resp = await fetch(process.env.REACT_APP_BACKEND_URL +'/api/v1/game/verify', {
          method: "POST",
          headers: {
              'Content-Type': 'application/json',

@@ -5,8 +5,8 @@ const Buttons=()=>{
     return(
         <div className="play-buttons">
             <button className="play-buttons-btn" onClick={()=>{navigate('/single')}}>Play Alone!</button>
-            <button className="play-buttons-btn"onClick={()=>{navigate('/multi')}}>Join Room</button>
-            <button className="play-buttons-btn"onClick={()=>{navigate('/multi')}}>Create Room</button>
+            <button className="play-buttons-btn"onClick={()=>{navigate('/join')}}>Join Room</button>
+            <button className="play-buttons-btn"onClick={()=>{navigate('/create')}}>Create Room</button>
         </div>
     );
 }

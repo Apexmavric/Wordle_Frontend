@@ -21,7 +21,7 @@ function Fileupload() {
     const formData = new FormData();
     formData.append('image', image);
     try {
-      const resp = await fetch('http://localhost:5000/api/v1/player/image', {
+      const resp = await fetch(process.env.REACT_APP_BACKEND_URL +'/api/v1/player/image', {
           method: 'POST',
           headers:{
             'Authorization': `Bearer ${token}`
@@ -44,7 +44,7 @@ function Fileupload() {
   useEffect(()=>{
     const fetchImage = async()=>{
         try{
-            const resp = await fetch('http://localhost:5000/api/v1/player/image',{
+            const resp = await fetch(process.env.REACT_APP_BACKEND_URL +'/api/v1/player/image',{
                 method:'GET',
                 headers:{
                     'Authorization': `Bearer ${token}`

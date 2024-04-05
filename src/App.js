@@ -4,9 +4,10 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import PlayerContextProvider from './context/PlayerContextProvider';
 import Menu from './Pages/MenuPage';
 import ProfilePage from './Pages/ProfilePage';
-import Multiplayer from './Pages/Multiplayer';
+import CreateRoom from './Pages/CreateRoom';
 import SinglePage from './Pages/SinglePage';
 import GameDetails from './Pages/GameDetails';
+import Joinroom from './Pages/JoinRoom';
 function App() {
   return (
     <PlayerContextProvider>
@@ -17,7 +18,8 @@ function App() {
             <Route path='/' element = {<LoginPage/>}></Route>
             <Route path='/profile' element = {<ProfilePage/>}></Route>
             <Route path='/single' element = {<SinglePage/>}></Route>
-            <Route path='/multi' element = {<Multiplayer/>}></Route>
+            <Route path='/create' element = {<CreateRoom/>}></Route>
+            <Route path='/join' element = {<Joinroom/>}></Route>
             <Route path='/gamedetails' element = {<GameDetails/>}></Route>
         </Routes>
       </BrowserRouter>

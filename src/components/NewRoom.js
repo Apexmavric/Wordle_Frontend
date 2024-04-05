@@ -1,6 +1,6 @@
-const Fetchtime = async()=>{
+const NewRoom = async()=>{
     const token = localStorage.getItem('token');
-    const response = await fetch(process.env.REACT_APP_BACKEND_URL +"/api/v1/player/time", {
+    const response = await fetch(process.env.REACT_APP_BACKEND_URL +"/api/v1/game/multi/createRoom", {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -8,7 +8,7 @@ const Fetchtime = async()=>{
         },
     });
     const data = await response.json();
-    return data.time;
+    return data.roomId;
 }
 
-export default Fetchtime;
+export default NewRoom;

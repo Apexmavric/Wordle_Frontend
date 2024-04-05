@@ -8,7 +8,7 @@ const Games = () => {
     useEffect(() => {
         const fetchdetails = async () => {
             try {
-                const response = await fetch("http://localhost:5000/api/v1/game/details", {
+                const response = await fetch(process.env.REACT_APP_BACKEND_URL +"/api/v1/game/details", {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",

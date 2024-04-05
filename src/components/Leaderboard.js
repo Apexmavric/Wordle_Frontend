@@ -8,7 +8,7 @@ const LeaderBoard = () => {
     const token = localStorage.getItem('token');
     useEffect(() => {
         const fetchDetails = async () => {
-            const response = await fetch("http://localhost:5000/api/v1/player", {
+            const response = await fetch(process.env.REACT_APP_BACKEND_URL +"/api/v1/player", {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
@@ -20,7 +20,7 @@ const LeaderBoard = () => {
             setPlayerdetails(data.playerDetails);
         }
         const fetchFriends = async()=>{
-            const response = await fetch("http://localhost:5000/api/v1/player/friends", {
+            const response = await fetch(process.env.REACT_APP_BACKEND_URL +"/api/v1/player/friends", {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",

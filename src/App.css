@@ -606,3 +606,106 @@ body{
   color: aliceblue;
   font-weight: 10;
 }
+
+.room-players-container{
+  color: aliceblue;
+  font-weight: 80;
+  width: 40%;
+  outline: 1px solid rgb(152, 152, 152);
+  position: absolute;
+  left : 40%;
+  top : 30%;
+  /* display: flex; */
+  justify-content: center;
+}
+
+.room-players-title{
+  flex: 1;
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  /* outline: 1px solid red; */
+  padding: 10px;
+  /* justify-content: center; */
+  background-color:  #4b4a4a;
+  /* gap : 10px; */
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+}
+
+.room-players-data-container{
+  /* position: fixed; */
+  height: 300px;
+  overflow-y: scroll;
+  width: 100%;
+  margin :0;
+  padding: 0;
+  /* display: block; */
+}
+.room-players-data-container::-webkit-scrollbar{
+  display: none;
+}
+.room-players-data{
+  width : 100%;
+  padding: 10px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.leave-btn{
+   box-sizing: border-box;
+    position: absolute;
+    top: 400px;
+    color: aliceblue;
+    font-weight: 80;
+    padding: 10px;
+    left : 25%;
+    width: 200px;
+    font-size: 20px;
+    background-color: #F32013;
+
+}
+
+.join-room-form {
+  position: absolute;
+  /* outline: 1px solid red; */
+  left:40%; /* Adjust the left position to center it */
+  width:40%; /* Set the width of the form */
+  top:25%;
+  display: flex;
+  justify-content: center;
+}
+
+.join-room-input {
+  width: 85%; /* Ensure the input takes up the full width of the form */
+  box-sizing: border-box;
+  padding: 5px;
+  /* Add any other styles as needed */
+}
+
+.join-room-form input[type="submit"] {
+  width: 15%;
+  /* margin-top: 10px; Add some spacing between the input and the submit button */
+  /* width: 100%; */
+  background-color: #1F75FE;
+  color:  aliceblue;
+  font-weight: 80;
+  /* padding: 10px; */
+  /* Add any other button styles as needed */
+}
+.room-players-data-admin{
+  /* outline: 1px solid red; */
+  display: flex;
+  align-items: center;
+}
+
+.room-players-data-admin:hover .remove-btn-admin{
+  visibility: visible;
+} 
+.remove-btn-admin{
+  position: absolute;
+  visibility: hidden;
+  right: 20px;
+}
