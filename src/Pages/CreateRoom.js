@@ -3,11 +3,14 @@ import AccountDetails from "../components/AccountDetails";
 import Sidebar from "../components/SideBar";
 import { io } from "socket.io-client";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
+import GameParameters from "../components/GameParameters";
 
 export default function CreateRoom() {
     const [socket, setSocket] = useState('');
     const [room, setRoom] = useState(localStorage.getItem('room'));
     const [users, setUsers] = useState({players : [], admin : ""});
+    const [time, setTime] = useState(30);
+    const [rounds, setRounds] = useState(2);
     const name = localStorage.getItem('name');
     useEffect(() => {
         const newSocket = io(process.env.REACT_APP_BACKEND_URL);
@@ -22,22 +25,18 @@ export default function CreateRoom() {
                     setRoom(id);
                 }); 
                 newSocket.on('users', (e) => {
-                    // console.log(e);
                     setUsers(e);
                 }); 
             } else {
                 setRoom(localStorage.getItem('room'));
                 newSocket.emit('join-room', localStorage.getItem('room'), name);
                 newSocket.on('users', (e) => {
-                    // console.log(e);
                     setUsers(e);
                 });
             }
             newSocket.emit('refresh-ids', name);
         });
         return (()=>{
-            // console.log("page left")
-            // console.log('disconnect');
             if(localStorage.getItem('room'))
             {
                 newSocket.emit('leave-room' , localStorage.getItem('room'), name);
@@ -46,6 +45,17 @@ export default function CreateRoom() {
             }
         })
     }, []);
+
+    useEffect(()=>{
+        if(socket)
+        {   
+            if(localStorage.getItem('room'))
+            {   console.log('sending time and rounds info');
+                if(users && users.admin === name) socket.emit('game-infos',room, rounds, time);
+            }
+        }
+    },[rounds, time])
+
     const handleLeave = (e)=>{
         if(socket)
         {   
@@ -54,6 +64,8 @@ export default function CreateRoom() {
                 socket.emit('leave-room' , localStorage.getItem('room'), name);
                 setUsers("");
                 localStorage.removeItem('room');
+                localStorage.removeItem('rounds');
+                localStorage.removeItem('time');
             }
             
         }
@@ -68,7 +80,6 @@ export default function CreateRoom() {
             })
         }
     }
-    // console.log(users);
     return (
         <div className="MenuPage">
             <div className="menu-navbar">
@@ -76,6 +87,13 @@ export default function CreateRoom() {
                 <AccountDetails />
             </div>
             <Sidebar />
+            <div className="game-details-text">
+                <div> Rounds : {rounds}</div>
+                <div>Time : {time}</div>
+            </div>
+            {
+               users && (users.admin === name) && <GameParameters setRounds = {setRounds} setTime = {setTime}/>
+            }
             <div className="room-players-container">
                 <div className="room-players-title">
                     <div className="room-players-title-text">Room {room}</div>

@@ -8,6 +8,7 @@ import CreateRoom from './Pages/CreateRoom';
 import SinglePage from './Pages/SinglePage';
 import GameDetails from './Pages/GameDetails';
 import Joinroom from './Pages/JoinRoom';
+import Multiplayer from './Pages/Multiplayer';
 function App() {
   return (
     <PlayerContextProvider>
@@ -21,6 +22,7 @@ function App() {
             <Route path='/create' element = {<CreateRoom/>}></Route>
             <Route path='/join' element = {<Joinroom/>}></Route>
             <Route path='/gamedetails' element = {<GameDetails/>}></Route>
+            <Route path='/multi' element ={<Multiplayer/>}></Route> 
         </Routes>
       </BrowserRouter>
     </div>

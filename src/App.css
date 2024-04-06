@@ -549,7 +549,7 @@ body{
   margin-bottom: 15px;
   /* outline: 1px solid red; */
   padding: 10px;
-  width: 250px;
+  width: 100%;
   transition: transform 0.3s ease;
 }
 .sidebar-info:hover{
@@ -608,15 +608,20 @@ body{
 }
 
 .room-players-container{
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  padding: 10px;
+  /* background-color: #F32013; */
   color: aliceblue;
   font-weight: 80;
   width: 40%;
-  outline: 1px solid rgb(152, 152, 152);
+  outline: 1px solid rgb(70, 67, 67);
   position: absolute;
-  left : 40%;
-  top : 30%;
-  /* display: flex; */
+  left : 50%;
+  top : 35%;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 .room-players-title{
@@ -624,6 +629,7 @@ body{
   display: flex;
   width: 100%;
   box-sizing: border-box;
+  border-radius: 5px;
   /* outline: 1px solid red; */
   padding: 10px;
   /* justify-content: center; */
@@ -656,12 +662,13 @@ body{
 
 .leave-btn{
    box-sizing: border-box;
-    position: absolute;
-    top: 400px;
+   position: relative ;
+   bottom: -70px;
+    /* position: absolute; */
+    border-radius: 5px;
     color: aliceblue;
     font-weight: 80;
     padding: 10px;
-    left : 25%;
     width: 200px;
     font-size: 20px;
     background-color: #F32013;
@@ -671,9 +678,9 @@ body{
 .join-room-form {
   position: absolute;
   /* outline: 1px solid red; */
-  left:40%; /* Adjust the left position to center it */
+  left:50%; /* Adjust the left position to center it */
   width:40%; /* Set the width of the form */
-  top:25%;
+  top:30%;
   display: flex;
   justify-content: center;
 }
@@ -709,3 +716,195 @@ body{
   visibility: hidden;
   right: 20px;
 }
+
+.game-parameters-container{
+  color: aliceblue;
+  border: 1px  solid rgb(152, 152, 152);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  /* left: 300px; */
+  width: 100%;
+  box-sizing: border-box;
+  /* outline:  1px solid red; */
+}
+.game-parameter-dropdown-container{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.dropdown{
+  margin: 10px 0px;
+  font-weight: 80;
+  /* right: 200px; */
+  width: 50%;
+}
+.dropdown-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* width: fit-content; */
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  /* outline :1px solid red; */
+}
+
+.toggle-icon{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 1rem;
+}
+.dropdown-content{
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  position: absolute;
+  min-width: 50%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5rem;
+  max-height: 200px;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  opacity: 0;
+  background-color: #4b4a4a;
+  border-radius: 5px;
+  /* justify-content: center; */
+  align-items: center;
+  transform: translateY(-5%);
+  transition: transform 150ms ease-in-out;
+  opacity: 100ms ease-in-out;
+  /* pointer-events: none; */
+}
+
+.dropdown-content::-webkit-scrollbar{
+  display: none;
+}
+.button-open{
+  border: rgb(98, 100, 101) 1px solid;
+}
+
+.content-open{
+  opacity: 1;
+  transform: translateY(0%);
+}
+.dropdown-item{
+  padding: .5rem;
+  margin : 0.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 1rem;
+}
+
+.dropdown-item:hover{
+  background-color: rgb(116, 113, 113);
+  cursor: pointer ;
+}
+.game-details-text {
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+  position: absolute;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  color: aliceblue;
+  font-weight: 80;
+  outline: 1px solid rgb(52, 51, 51);
+  border-radius: 5px;
+  top: 30%;
+  left: 25%; /* Change to 50% */
+  /* transform: translateX(-20%);  */
+  font-size: 20px;
+}
+
+.start-game-btn{
+  /* position: absolute; */
+  background-color: rgb(229, 229, 21);
+  padding: 10px;
+  font-size: 20px;
+  width: 200px;
+  border-radius: 5px;
+}
+
+.games-setting-container{
+  position: absolute;
+  /* outline: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 300px;
+  height: 350px;
+  left: 25%;
+  top:45%;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+/* @media only screen and (min-width: 500px) and (max-width: 986px) {
+  .games-setting-container{
+    width: 150px;
+  }
+  .game-details-text{
+    width: 150px;
+  }
+  .start-game-btn{
+    width: 100px;
+  }
+  .sidebar-info{
+    width: 100px;
+    font-size: 15px;
+  }
+}
+
+@media only screen and (min-width: 100px) and (max-width: 597px) {
+  .games-setting-container{
+    width: 200px;
+  }
+  .game-details-text{
+    width: 200px;
+  }
+  .sidebar-info{
+    font-size: 10px;
+  }
+}
+
+@media only screen and (min-width: 986px) and (max-width: 1191px) {
+  .games-setting-container{
+    width: 200px;
+  }
+  .game-details-text{
+    width: 200px;
+  }
+  .sidebar-info{
+    width: 150px;
+  }
+  .room-players-container{
+    width: 30%;
+  }
+}
+@media only screen and (min-width: 1191px) and (max-width: 1378px) {
+  .games-setting-container{
+    width: 250px;
+  }
+  .game-details-text{
+    width: 250px;
+  }
+  .room-players-container{
+    width: 50%;
+  }
+} */
+
+
+/* @media only screen and (min-width: 1378px) {
+  .sidebar-info{
+    width: 250px;
+  }
+} */

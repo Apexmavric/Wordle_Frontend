@@ -56,7 +56,7 @@ const Sidebar = () => {
                         <div>{details.stats.maxStreak}</div>
                     </div>
                     <div className="sidebar-info">
-                        <div>No of games Played</div>
+                        <div>Games Played</div>
                         <div>{details.stats.gamesPlayed}</div>
                     </div>
                     <div className="sidebar-info">

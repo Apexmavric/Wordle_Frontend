@@ -3,7 +3,7 @@ import AccountDetails from "../components/AccountDetails";
 import Sidebar from "../components/SideBar";
 import { io } from "socket.io-client";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
-import { Kitchen } from "@mui/icons-material";
+import GameParameters from "../components/GameParameters";
 
 
 export default function CreateRoom() {
@@ -11,6 +11,8 @@ export default function CreateRoom() {
     const [room, setRoom] = useState(localStorage.getItem('room'));
     const [froom, setFroom] = useState(localStorage.getItem('room'));
     const [users, setUsers] = useState({players : [], admin : ""});
+    const [time, setTime] = useState(localStorage.getItem('time') || 30);
+    const [rounds, setRounds] = useState(localStorage.getItem('rounds') || 2);
     const name = localStorage.getItem('name');
     const [showusers, setShowUsers] = useState(false);
     
@@ -28,26 +30,48 @@ export default function CreateRoom() {
                 setUsers(e);
             });
         }
+        if(users && users.admin !== name)
+        {
+                newSocket.on('get-game-info',(e)=>{
+                const {Time, Rounds} = e; 
+                console.log(`Yeh time hai : ${Time} aur yeh rounds hai ${Rounds}`)
+                localStorage.setItem('time', Time);
+                localStorage.setItem('rounds', Rounds);
+                setTime(Time);
+                setRounds(Rounds);
+            })
+        }
         newSocket.on('user-left', ()=>{
-            console.log('user-;eft-triggered');
             localStorage.removeItem('room');
             setUsers("");
             setFroom("");
+            setRoom("");
         })
         newSocket.emit('refresh-ids', name);
     });
     return (()=>{
-        // console.log("page left")
-        // console.log('disconnect');
         if(localStorage.getItem('room'))
         {
             newSocket.emit('leave-room' , localStorage.getItem('room'), name);
             setUsers("");
             localStorage.removeItem('room');
+            localStorage.removeItem('rounds');
+            localStorage.removeItem('time');
         }
     })
 }, []);
-    
+
+    useEffect(()=>{
+        if(socket)
+        {       
+            if(localStorage.getItem('room'))
+            {   
+                console.log('sending time and rounds info');
+                if(users && users.admin === name) socket.emit('game-infos',room, rounds, time);
+            }
+        }
+    },[rounds, time])
+
     const RoomChangeHandler = (e)=>{
         e.preventDefault();
         setRoom(e.target.value);
@@ -60,7 +84,6 @@ export default function CreateRoom() {
         {
             socket.emit('join-room', localStorage.getItem('room'), name);
             socket.on('users', (e) => {
-                // console.log(e);
                 setUsers(e);
             });
         }
@@ -76,7 +99,6 @@ export default function CreateRoom() {
         }
     }
     const handleKick = (playerName)=>{
-        // console.log(localStorage.getItem('room'), playerName, users.admin);
         if(socket)
         {   
             socket.emit('kick-out', localStorage.getItem('room'), playerName, users.admin);
@@ -85,7 +107,6 @@ export default function CreateRoom() {
             })
         }
     }
-    // console.log(users);
     return (
         <div className="MenuPage">
             <div className="menu-navbar">
@@ -93,10 +114,17 @@ export default function CreateRoom() {
                 <AccountDetails />
             </div>
             <Sidebar />
+            <div className="game-details-text">
+                <div> Rounds : {rounds}</div>
+                <div>Time : {time}</div>
+            </div>
             <form className="join-room-form">
                 <input type="text" value = {room} onChange={RoomChangeHandler} className="join-room-input"></input>
                 <input type="submit" value="Join" onClick={handleClick}></input>
             </form>
+            {
+               users && (users.admin === name) && <GameParameters setRounds = {setRounds} setTime = {setTime}/>
+            }
             <div className="room-players-container">
                 <div className="room-players-title">
                     <div className="room-players-title-text">Room {room}</div>
@@ -106,10 +134,12 @@ export default function CreateRoom() {
                             users && users.admin === name && users.players.map((data, index) => {
                             const bg = users.admin === data.playerName ? 'lightblue' : 'aliceblue';
                             {   
-                                    return (<div className="room-players-data-admin">
-                                            <div className="room-players-data" style={{ color: bg }} key={index}>{data.playerName}</div>
+                                return (                            
+                                        <div className="room-players-data-admin">
+                                            <div className="room-players-data" style={{ color: bg }}>{data.playerName}</div>
                                                 < IoMdRemoveCircleOutline className="remove-btn-admin"  onClick={()=>{handleKick(data.playerName)}}/>
-                                            </div>)
+                                        </div>
+                                        )
                             }
                         })
                     }
