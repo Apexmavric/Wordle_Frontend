@@ -1,16 +1,14 @@
 import { useState } from "react";
-import PlayerContext from "./Playercontext.js"
+import BlurContext from "./Playercontext.js"
 
 
-const PlayerContextProvider = ({children}) => {
-    const [token, setToken] = useState("");
-    const [playerId, setPlayerId] = useState("");
-    const [playerName, setPlayername] = useState("");
+const BlurContextProvider = ({children}) => {
+    const [isblur, setisBlur] = useState(false);
     return (
-        <PlayerContext.Provider value={{token, setToken, playerId, setPlayerId, playerName, setPlayername}}>
+        <BlurContext.Provider value={{isblur, setisBlur}}>
             {children}
-        </PlayerContext.Provider>
+        </BlurContext.Provider>
     );
 }
 
-export default  PlayerContextProvider;
+export default  BlurContextProvider;

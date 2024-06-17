@@ -1,0 +1,102 @@
+.btn-container{
+    /* outline: 1px solid blue; */
+    color: aliceblue;   
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+    height: 28%;
+    background-color: rgb(28, 29, 29); ;
+    /* transform: translateX(0%); */
+    box-shadow: none;
+    transition: box-shadow, background-color 0.4s;
+    text-transform: none;
+    gap: 3%;
+    padding: 20px;
+    margin-bottom: 20px;
+   
+}
+
+.left{
+    animation: left-entry 1s ease-out forwards;
+
+}
+.right{
+    animation: right-entry 1s ease-out forwards;
+}
+@keyframes left-entry {
+    0%{
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    30%{
+        opacity: 0;
+    }
+    100%{
+        transform: translate(0%);
+        opacity: 1;
+    }
+}
+
+@keyframes right-entry {
+    0%{
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    30%{
+        opacity: 0;
+    }
+    100%{
+        transform: translate(0%);
+        opacity: 1;
+    }
+}
+
+.btn-container:hover{
+    box-shadow: rgba(245, 244, 244, 0.24) 0px 7px 29px 0px;
+    background-color: rgb(57, 58, 58);
+}
+
+.play-buttons{
+    /* outline: 1px solid red; */
+    height: 500px; 
+    width: 100%;
+    size: 100px;
+    position: absolute;
+    right: 0px;
+    top:180px;
+    /* height: 300px; */
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    font-weight:lighter;
+    font-family: "Bona Nova", serif;
+    font-style: italic;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    z-index: 0;
+  }
+  .play-buttons::-webkit-scrollbar{
+    display: none;
+  }
+  .play-buttons-btn{
+    font-size: 30px;
+    padding: 10px;
+    background-color: rgb(75, 181, 67);
+    width: 250px;
+    color: aliceblue;
+    border-radius: 10px;
+    cursor: pointer;
+    /* size: 300px; */
+  }
+
+  .play-buttons-btn:hover{
+    transform: scale(1.1);
+    transition: transform 0.3s;
+  }
+
+  .btn-info {
+    white-space: pre-wrap; /* This handles the white space and line breaks */
+}

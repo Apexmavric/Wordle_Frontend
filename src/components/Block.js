@@ -1,12 +1,14 @@
 import React from "react";
 
-export default function Block(props){
-    let bg = "#333";
-    if(props.isgreen === 1) bg = "green";
-    else if(props.isgreen === 2) bg = "lightgray";
-    else if(props.isgreen === 3) bg = "yellow";
+export default function Block({ name, isgreen, id }) {
+    const style = {
+        backgroundColor: isgreen === 1 ? "rgb(154,210,50)" : isgreen === 2 ? "rgb(178, 190, 181)" : isgreen === 3 ? "rgb(255,255,0, 0.6)" : "rgb(21,20,20)",
+    };
     return (
-        <div id = {props.id} className="block" style={{ backgroundColor: bg }}>{props.name}</div>
+        <div id={`Block${id}`} key={`IBlock${id}`} className="block" style={style}>
+            {name}
+        </div>
     );
-    
 }
+
+// 255, 87, 51 

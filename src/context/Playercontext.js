@@ -1,8 +1,8 @@
 // import React from "react";
 import { createContext } from "react";
 
-const PlayerContext = createContext();
+const BlurContext = createContext();
 
-export default PlayerContext;
+export default BlurContext;
 
 

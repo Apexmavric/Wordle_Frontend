@@ -1,0 +1,63 @@
+.verify-icon{
+    background-color: white;
+    /* outline : 1px solid blue; */
+    height: 100%;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.popup-container{
+    height: 100%;
+    width: 100%;
+    border-radius: 2px;
+    display: flex;
+    border-radius: 10px;
+    /* outline: 10px solid blue; */
+}
+
+.verify-msg{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: large;
+    font-weight: 20;
+}
+
+.login-popup {
+    position: absolute;
+    height: 10%;
+    width: 20%;
+    top:50%;
+    right: 5%;
+    /* outline: 1px solid blue; */
+    /* animation: pop-up 3s ease-in-out forwards;  */
+}
+
+.pop-up-animation{
+     animation: pop-up 2s ease-in-out forwards;    
+}
+
+@keyframes pop-up {
+    0% {
+        opacity: 0;
+        /* display: block; */
+    }
+    20% {
+        opacity: 1; 
+    }
+    80% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.verify-link-container{
+    height: 100px;   
+    width: 60%;
+}

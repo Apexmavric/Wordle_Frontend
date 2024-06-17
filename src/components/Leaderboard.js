@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
 import { FaRankingStar } from "react-icons/fa6";
+import Spinner from "./Spinner";
 
-const LeaderBoard = () => {
+const LeaderBoard = ({showpopup}) => {
     const [playerdetails, setPlayerdetails] = useState([]);
     const [showfriends, setShowfriends] = useState(false);
     const [friends, setFriends] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     const token = localStorage.getItem('token');
+    
     useEffect(() => {
         const fetchDetails = async () => {
+            setIsLoading(true);
             const response = await fetch(process.env.REACT_APP_BACKEND_URL +"/api/v1/player", {
                 method: 'GET',
                 headers: {
@@ -16,9 +20,13 @@ const LeaderBoard = () => {
                 }
             });
             const data = await response.json();
-            // console.log(data);
             setPlayerdetails(data.playerDetails);
+            setIsLoading(false);
         }
+        
+        fetchDetails();
+    }, [])
+    useEffect(()=>{
         const fetchFriends = async()=>{
             const response = await fetch(process.env.REACT_APP_BACKEND_URL +"/api/v1/player/friends", {
                 method: 'GET',
@@ -28,22 +36,23 @@ const LeaderBoard = () => {
                 }
             });
             const data = await response.json();
-            // console.log(data);
             setFriends(data.playerFriends);
         }
         fetchFriends();
-        fetchDetails();
-    }, [])
+    },[showpopup])
     const handleFriends = ()=>{
         setShowfriends(prev => !prev);
     }
     return (
-        <div className="leaderboard-container">
+        <div className={`leaderboard-container ${isLoading ? 'blur' : ''}`}>
+        {
+            isLoading && <Spinner/>
+        }
         <table className="leaderboard">
                 <thead className="leaderboard-head">
                     <div className="leaderboard-title">
                        <FaRankingStar />
-                        <div>Rankings</div>
+                        <div>Global Rankings</div>
                         <label className="show-friends-btn">
                         <input
                             type="checkbox"
@@ -63,10 +72,10 @@ const LeaderBoard = () => {
                 <div className="table-body-container">
                 <tbody className="table-body">
                     {
-                        playerdetails && playerdetails.map((data,i)=>{
+                            playerdetails && playerdetails.map((data,i)=>{
                             if(showfriends)
                             {   
-                                if(friends.includes(data.playerId))
+                                if(friends.includes(data.playerName))
                                 return (
                                     <tr className="table-body-row">
                                     <td className="table-data">{Number(i)+1}</td>

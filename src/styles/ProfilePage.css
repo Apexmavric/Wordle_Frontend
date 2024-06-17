@@ -1,0 +1,126 @@
+.profile-page-containers{
+    position: absolute;
+    width: 80%;
+    left: 20%;
+    top: 150px;
+    height: 250px;
+    outline: 1px solid rgb(152, 152, 152, 0.2);
+    /* outline : 1px solid red; */
+}
+.c-username{
+    top: 350px;
+    /* outline: 1px solid red; */
+}
+.c-email{
+    top: 600px;
+}
+
+.file-upload{
+    /* outline: 1px solid blue; */
+    height: 100%;
+}
+
+.up{
+    height: 80%;
+    top: 5%;
+    border-radius: 50%;
+    /* left: 50%; */
+}
+.up:hover{
+    transform: none;
+}
+
+.upload-btns{
+    width: 100%;
+    height: 100%;
+    /* outline : 1px solid red; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container-heading{
+    background-color: rgb(98, 95, 95);
+    /* outline: 1px solid red; */
+    height: 50px;
+    color: aliceblue;
+    font-weight: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container-body{
+    position: relative;
+    display: flex;
+    height: 200px;
+    width: 100%;
+}
+.container-elements{
+    position: relative;
+    width: 50%;
+    height: 100%;
+    color: aliceblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+.change-options-container{
+    height: 50px;
+    color: lightblue;
+    cursor: pointer;
+    /* outline : 1px solid blue; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.change-options-body{
+    text-align: center;
+    /* outline: 1px solid red; */
+    width: 50%;
+    height: 100%;
+}
+.input-container{
+    /* outline: 1px solid blue; */
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.input-bar{
+    /* outline: 1px solid red;t- */
+    padding-left: 10px ;
+    background-color: inherit;
+    color: inherit;
+    height: 80%;
+    width: 100%;
+    user-select: none;
+    border: none;
+    /* margin: 10px; */
+}
+
+.update-btns-container{
+    /* outline: 1px solid red; */
+    position: relative;
+    height: 50px;
+}
+.check-text{
+    /* outline: 1px solid blue; */
+    position: absolute;
+    top:-10px;
+    left: 10px;
+    font-size: 12px;
+    /* margin: 10px; */
+    /* width: ; */
+}
+.update-btn{
+    position: relative;
+    top:20px;
+    background-color: rgb(11, 151, 11);
+    color: aliceblue;
+    font-weight: inherit;
+    height: 30px;
+    border-radius: 5px ;
+}
+

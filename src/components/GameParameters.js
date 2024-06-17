@@ -1,7 +1,10 @@
+import { useNavigate } from "react-router";
 import Dropdown from "./Dropdown";
-const GameParameters = ({setTime, setRounds})=>{
+import { Link } from "react-router-dom";
+const GameParameters = ({setTime, setRounds, setStart})=>{
     const gameRoundOptions = [2,5,10,15];
-    const TimeOptions = [30,60, 90, 120];
+    const TimeOptions = [10,30,60, 90, 120, 400];
+    
     return(
         <div className="games-setting-container">
         <div className="game-parameters-container">
@@ -11,7 +14,6 @@ const GameParameters = ({setTime, setRounds})=>{
                 <Dropdown items={TimeOptions} text="Time" setf = {setTime} ></Dropdown>
             </div>
         </div>
-        <button value = "Start Game" className="start-game-btn">Start Game</button>
         </div>
     );
 }   

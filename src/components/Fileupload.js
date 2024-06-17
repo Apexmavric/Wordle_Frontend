@@ -10,7 +10,6 @@ function Fileupload() {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImage(file);
-    // e.target.value = ' ';
   };
 
   const handleUpload = async () => {
@@ -32,7 +31,6 @@ function Fileupload() {
       console.log(data);
       setImagechange(imageChange => !imageChange);
       setdisplay(prev => ! prev);
-    //   console.log(imageChange);
       setImage(image);
       alert('Image uploaded successfully!');
     } catch (error) {
@@ -41,38 +39,22 @@ function Fileupload() {
     }
   };
 
-  useEffect(()=>{
-    const fetchImage = async()=>{
-        try{
-            const resp = await fetch(process.env.REACT_APP_BACKEND_URL +'/api/v1/player/image',{
-                method:'GET',
-                headers:{
-                    'Authorization': `Bearer ${token}`
-                  }
-            });
-            const blob = await resp.blob();
-            // console.log(blob);
-            setImageUrl(URL.createObjectURL(blob));
-        }
-        catch(err)
-        {
-            console.log(err);
-        }
-    }
-    fetchImage();
-  }, [imageChange, token])
-  const handleImageClick = (e)=>{
+  const handleClick = (e)=>{
     setdisplay(prev => ! prev);
   }
   return (
     <div className='file-upload'>
-      {imageUrl && display &&  <img src={imageUrl} alt="Uploaded" onClick={handleImageClick} className='profile-image'/>}
+      {display &&  <div onClick={handleClick}>
+        <div>
+          Change Profile-Picture
+        </div>
+        </div>}
       {
         !display && 
-         <>
+         <div className='upload-btns'>
           <input type="file" accept="image/*" onChange={handleImageChange}/>
           <button onClick={handleUpload}>Upload Image</button>
-         </> 
+         </div> 
       }
     </div>
   );

@@ -1,0 +1,370 @@
+.room-gamedetails-container{
+    position: absolute;
+    display: flex;
+    height: fit-content;
+    width:80%;
+    left:20%;
+    top:40%;
+    /* outline : 1px solid red; */
+  }
+  
+  .multiplayer-buttons{
+    position: absolute;
+    display: flex;
+    /* outline: 1px solid red; */
+    justify-content: space-around;
+    align-items: center;
+    width: 80%;
+    left: 20%;
+    height: 100px;
+    top:20%;
+  }
+  
+  .game-container{
+    position: absolute;
+    width: 30%;
+    right: 7%;
+    height: 100%;
+    /* height: 350px; */
+  }
+  
+  .invite-friends{
+    position: absolute;
+    height: 300px;
+    width: 400px;
+    text-align: center;
+    left: 50%;
+    top:40%;
+    z-index: 5;
+    /* outline: 1px solid red; */
+  }
+  
+  .request-popup-container{
+    /* outline: 1px solid  */
+    border: 1px solid rgb(152, 152, 152);
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border-radius: 2px;
+    background-color:  #605e5e;
+    top:100px;
+    animation: pop-animation  ease 5s forwards; 
+  }
+  
+  .request-popup-buttons{
+   
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    padding-top:0px;
+    box-sizing: border-box;
+  
+  }
+  .request-popup-text{
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+    color: aliceblue;
+    font-weight: 80;
+  }
+  
+  .request-popup-btns{
+    width: 150px;
+    height: 40px;
+    border-radius: 5px;
+  }
+  .request-popup-btns:hover{
+    cursor: pointer;
+  }
+  .accept{
+    background-color: rgb(11, 191, 80);
+  }
+  .decline{
+    background-color: #F32013;
+  }
+
+  .room-players-data-admin{
+    /* outline: 1px solid red; */
+    display: flex;
+    align-items: center;
+  }
+  
+  .room-players-data-admin:hover .remove-btn-admin{
+    visibility: visible;
+  }
+
+  .room-players-container{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 30px;
+    color: aliceblue;
+    font-weight: 80;
+    width: 50%;
+    outline: 1px solid rgb(70, 67, 67);
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    height: 350px;
+    border-radius: 40px 40px 10px 10px;
+    left: 50px;
+    /* outline: 1px solid red; */
+  }
+  
+  .room-players-title{
+    width: 100%;
+    height: 40px;
+    box-sizing: border-box;
+    position: absolute;
+    border-radius: 100px 100px 0px 0px;
+    padding: 20px;
+    top:0px;
+    left: 0px;
+    padding: 10px;
+    background-color:  #4b4a4a;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .room-players-data-container{
+    /* position: fixed; */
+    height: 300px;
+    overflow-y: scroll;
+    width: 100%;
+    margin :0;
+    padding: 0;
+    /* display: block; */
+  }
+  .room-players-data-container::-webkit-scrollbar{
+    display: none;
+  }
+  .room-players-data{
+    width : 100%;
+    padding: 10px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 50%;
+    /* outline: 1px solid red; */
+  }
+  
+  .leave-btn{
+     box-sizing: border-box;
+     position: relative ;
+     /* bottom: -70px; */
+     /* outline: none; */
+      /* position: absolute; */
+      border-radius: 5px;
+      color: aliceblue;
+      font-weight: 80;
+      padding: 10px;
+      width: 200px;
+      font-size: 20px;
+      background-color: #F32013;
+  
+  }
+  
+  .leave-btn:hover{
+    cursor: pointer;
+  }
+  
+  .join-room-form {
+    position: absolute;
+    /* outline: 1px solid red; */
+    left:50%; /* Adjust the left position to center it */
+    width:40%; /* Set the width of the form */
+    top:30%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .join-room-input {
+    width: 85%; 
+    box-sizing: border-box;
+    padding: 5px;
+  }
+  
+  .join-room-form input[type="submit"] {
+    width: 15%;
+    background-color: #1F75FE;
+    color:  aliceblue;
+    font-weight: 80;
+  }
+   
+  .remove-btn-admin{
+    position: absolute;
+    visibility: hidden;
+    right: 20px;
+  }
+  
+  .remove-btn-admin:hover{
+    cursor: pointer;
+  }
+  
+  .game-parameters-container{
+    color: aliceblue;
+    border: 1px  solid rgb(152, 152, 152, 0.2);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    /* left: 300px; */
+    width: 100%;
+    box-sizing: border-box;
+    /* outline:  1px solid red; */
+  }
+  .game-parameter-dropdown-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .dropdown{
+    margin: 10px 0px;
+    font-weight: 80;
+    /* right: 200px; */
+    width: 50%;
+  }
+  .dropdown-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* width: fit-content; */
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    /* outline :1px solid red; */
+  }
+  
+  .toggle-icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1rem;
+  }
+  .dropdown-content{
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    position: absolute;
+    min-width: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0.5rem;
+    max-height: 200px;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    opacity: 0;
+    background-color: #4b4a4a;
+    border-radius: 5px;
+    /* justify-content: center; */
+    align-items: center;
+    transform: translateY(-5%);
+    transition: transform 150ms ease-in-out;
+    opacity: 100ms ease-in-out;
+    /* pointer-events: none; */
+  }
+  
+  .dropdown-content::-webkit-scrollbar{
+    display: none;
+  }
+  .button-open{
+    border: rgb(98, 100, 101) 1px solid;
+  }
+  
+  .content-open{
+    opacity: 1;
+    transform: translateY(0%);
+  }
+  .dropdown-item{
+    padding: .5rem;
+    margin : 0.5rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 1rem;
+  }
+  
+  .dropdown-item:hover{
+    background-color: rgb(116, 113, 113);
+    cursor: pointer ;
+  }
+  .game-details-text {
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    height: 50px;
+    color: aliceblue;
+    font-weight: 80;
+    outline: 1px solid rgb(52, 51, 51);
+    border-radius: 5px;
+    font-size: 20px;
+  }
+  
+  .start-game-btn{
+    background-color: rgb(229, 229, 21);
+    padding: 10px;
+    font-size: 20px;
+    width: 200px;
+    border-radius: 5px;
+  }
+  .start-game-btn:hover{
+    cursor: pointer;
+  }
+  
+  .games-setting-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 200px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 20px;
+    border-radius: 5px;
+    /* display: none; */
+  }
+  .room-img{
+    position:relative;
+    width: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    height: 50px;
+    top:0px;
+    left: -40%;
+  }
+
+  .copy-btn{
+    position: absolute;
+    right: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .copy-btn :hover{
+    cursor: pointer;
+  }
+  
+  .invite{
+    background-color: #116bfc;
+  }
+  
+  .invite-friends-container{
+    outline: 1px solid red;
+    width: 300px;
+    height: 300px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+  }

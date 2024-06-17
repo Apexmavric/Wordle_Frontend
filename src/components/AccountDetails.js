@@ -13,7 +13,8 @@ const AccountDetails = () => {
     };
     let name = localStorage.getItem('name');
     function capitalizeFirstLetter(str) {
-        return str.charAt(0).toUpperCase() + str.slice(1);
+
+        return str != null ? str.charAt(0).toUpperCase() + str.slice(1): null;
     }
     const handleLogout = (e)=>{
         localStorage.removeItem('token');

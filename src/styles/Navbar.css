@@ -1,0 +1,129 @@
+.MenuPage{
+    /* position: static; */
+    height: 100%;
+    width: 100%;
+  }
+
+  .menu-navbar{
+    position: relative;
+    width: 100%;
+    right: 0px;
+    height: 100px;
+    color: aliceblue;
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    /* background-color: #116bfc; */
+    outline: 1px solid rgb(87, 84, 84, 0.3);
+    z-index: 0;
+    user-select: none;
+  
+  }
+
+ 
+
+  .menu-title{
+    font-weight: 80;
+    position: absolute;
+    font-size: 40px;
+    /* outline: 1px solid red; */
+     /* left: 50%; */
+  }
+
+  .menu-logo{
+    position: absolute;
+    left : 30px;
+    /* outline: 1px solid red; */
+    height: 100%;
+    width: 50px;
+  }
+  .menu-logo :hover{
+    cursor: pointer;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    /* outline: ; */
+  }
+
+  .navbar{
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position:absolute;
+    top: 0;
+    width: 100%;
+    height: 70px;
+    outline: 1px solid rgb(75, 75, 75, 0.5);
+    padding: 10px 0px;
+  
+  }
+
+  .nav-buttons-container{
+    position: absolute;
+    /* outline : 1px solid red; */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    top:100px;
+  }
+  .nav-buttons{
+    /* outline : 1px solid blue; */
+    width: 33%;
+    height: 100%;
+    display: flex;
+    position: relative;
+    overflow-y:hidden;
+    overflow-x:hidden;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    /* width: 100px; */
+    /* text-align: center; */
+    /* display: block; */
+  }
+  .nav-buttons a {
+    text-decoration: none;
+    color: inherit; /* This ensures the text color is inherited */
+}
+
+.nav-buttons a:link,
+.nav-buttons a:visited,
+.nav-buttons a:hover,
+.nav-buttons a:active {
+    text-decoration: none; /* Ensures no underline for all link states */
+    color: inherit; /* Ensures color inheritance for all link states */
+}
+
+.nav-buttons::before{
+   position: absolute;
+    content:'';
+    transform: translateY(-101%);
+    /* border: 1px solid red; */
+    height: 100%;
+    width: 45%;
+    border-radius: 0px 0px 40px 40px;
+    transition: transform 0.5s ;
+    /* display: none; */
+    background-color: rgb(98, 94, 94);
+    z-index: -2;
+    /* opacity: 0; */
+    /* width: 100%; */
+    /* height: 200px; */
+}
+
+.nav-buttons:hover::before {
+  transform: translateY(0%);
+   opacity: 1;
+   /* overflow-y: hidden; */
+}
+
+.stay::before{
+  transform: translateY(0%);
+  overflow-x: hidden;
+  /* width: 30%;
+  border-radius: 50%;
+  transition: none; */
+}

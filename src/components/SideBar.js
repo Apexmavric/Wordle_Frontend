@@ -1,17 +1,20 @@
+import '../styles/Sidebar.css';
 import { useNavigate } from "react-router";
-import Fileupload from "./Fileupload";
-import { useEffect, useState } from "react";
+import ProfilePic from "./ProfilePic";
+import { forwardRef, useEffect, useState } from "react";
 
-const Sidebar = () => {
+const Sidebar = forwardRef(({ isClosing }, ref) => {
+
     const token = localStorage.getItem('token');
     const name = localStorage.getItem('name');
     const [details, setDetails] = useState(null);
-    const [winRatio, setWinRatio] = useState(0); // State to store the win ratio
+    const [winRatio, setWinRatio] = useState(0);
     const navigate = useNavigate();
+
     useEffect(() => {
         const fetchdetails = async () => {
             try {
-                const response = await fetch(process.env.REACT_APP_BACKEND_URL +"/api/v1/player/details", {
+                const response = await fetch(process.env.REACT_APP_BACKEND_URL + "/api/v1/player/details", {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -20,12 +23,10 @@ const Sidebar = () => {
                 });
                 const data = await response.json();
                 setDetails(data.playerDetails);
-
-                // Calculate win ratio after setting details
                 const gamesPlayed = data.playerDetails.stats.gamesPlayed;
                 const wins = data.playerDetails.stats.wins;
                 const ratio = gamesPlayed === 0 ? 0 : wins / gamesPlayed;
-                const roundedRatio = parseFloat(ratio.toFixed(2))*100; // Round to two decimal places
+                const roundedRatio = parseFloat(ratio.toFixed(2)) * 100;
                 setWinRatio(roundedRatio);
             } catch (error) {
                 console.error(error);
@@ -35,8 +36,10 @@ const Sidebar = () => {
     }, []);
 
     return (
-        <div className="sidebar-container">
-            <Fileupload />
+        <div className={`sidebar-container ${isClosing ? 'sidebar-exit' : ''}`} ref={ref}>
+            <div className='profile-pic-container'>
+                <ProfilePic />
+            </div>
             {details && (
                 <div className="sidebar-info-container">
                     <div className="sidebar-info">
@@ -64,11 +67,11 @@ const Sidebar = () => {
                         <div>{winRatio}</div>
                     </div>
                     <div className="sidebar-info">View Friends</div>
-                    <div className="sidebar-info" onClick={()=>{navigate('/gamedetails')}}>Game History</div>
+                    <div className="sidebar-info" onClick={() => { navigate('/gamedetails') }}>Game History</div>
                 </div>
             )}
         </div>
     );
-}
+});
 
 export default Sidebar;
