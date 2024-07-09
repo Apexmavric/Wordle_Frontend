@@ -31,10 +31,10 @@ const AccountDetails = () => {
                     <div style={{display:'flex',alignItems:'center'}}><RxAvatar /></div>
                     <div >Account</div>
                 </Link>
-                <div className='acc-btn'>
-                <div style={{display:'flex',alignItems:'center'}}><MdOutlineExitToApp /></div>
+                <Link to = '/' className='acc-btn'>
+                    <div style={{display:'flex',alignItems:'center'}}><MdOutlineExitToApp /></div>
                     <div  onClick={handleLogout}>Logout</div>
-                </div>
+                </Link>
             </div>)}
             
         </div>

@@ -1,8 +1,11 @@
 import RoomPlayers from "./RoomPlayers";
 import { FaRegCopy, FaCopy } from "react-icons/fa6";
+import BlurContext from "../context/Playercontext";
+import { useContext } from "react";
 const RoomContainer = ({room, handleCopy, copied, users, name, socket, setUsers, profilePics})=>{
+    const {isblur} = useContext(BlurContext);
     return(
-        <div className="room-players-container">
+        <div className={`room-players-container ${isblur ? 'blur' : ''}`}>
         <div className="room-players-title"> 
             <div className="room-players-title-text">Room {room}</div>
             <div className="copy-btn">

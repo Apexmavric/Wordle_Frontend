@@ -6,7 +6,7 @@ import '../styles/Navbar.css';
 import '../styles/Sidebar.css';  // Import the CSS for sidebar animations
 import { useNavigate } from "react-router";
 import BlurContext from "../context/Playercontext";
-export default function NavBar({val}) {
+export default function NavBar({val, wantNavbar = 1}) {
     const [showSidebar, setShowsidebar] = useState(false);
     const [isClosing, setIsClosing] = useState(false);
     const sidebarRef = useRef(null);
@@ -61,11 +61,11 @@ export default function NavBar({val}) {
             )}
             <div className={`menu-title ${isblur ? 'blur' : ''}`}>Wordle</div>
             <AccountDetails />
-            <div className={`nav-buttons-container ${isblur ? 'blur' : ''}`}>
+            {wantNavbar && <div className={`nav-buttons-container ${isblur ? 'blur' : ''}`}>
                <h3 className={`nav-buttons ${val === 0 ? 'stay': ''}`} onClick={()=>{navigate('/leaderboard')}}>LeaderBoard</h3>
                <h3 className={`nav-buttons ${val === 1 ? 'stay': ''}`} onClick={()=>{navigate('/play')}}>Play</h3>
                <h3 className={`nav-buttons ${val === 2 ? 'stay': ''}`} onClick={()=>{navigate('/friends')}}>Friends</h3>
-            </div>
+            </div>}
         </div>
     );
 }

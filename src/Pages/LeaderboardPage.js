@@ -3,11 +3,10 @@ import AccountDetails from "../components/AccountDetails";
 import LeaderBoard from "../components/Leaderboard";
 import Buttons from "../components/Buttons";
 import SearchBar from "../components/Searchbar";
-
+import "../styles/Leaderboard.css";
 import { useNavigate } from "react-router";
 import NavBar from "../components/NavBar";
 import bgsource from "../Sounds/Memories-of-Spring(chosic.com).mp3";
-// import '../styles/MenuPage.css';
 export default function LeaderBoardPage() {
     const keysToKeep = ['name', 'token'];
     for (let key in localStorage) {
@@ -18,7 +17,6 @@ export default function LeaderBoardPage() {
     const token = localStorage.getItem('token');
     const navigate = useNavigate(null);
     const [isblur, setisBlur] = useState(false);
-
     
     useEffect(() => {
         const verify_token = async () => {
@@ -50,12 +48,8 @@ export default function LeaderBoardPage() {
     return (
         token && (
             <div className={`MenuPage ${isblur ? 'blur' : ' '}`}>
-               <NavBar setisBlur={setisBlur} val={0}/>
-                {/* <Buttons  /> */}
-                {/* <div className="leader-search-container" ref={leader_ref}>
-                    <LeaderBoard showpopup={showpopup} />
-                    <SearchBar showpopup={showpopup} setShowpopup={setShowpopup} />
-                </div> */}
+              <NavBar setisBlur={setisBlur} val={0}/> 
+                <LeaderBoard />
             </div>
         )
     );

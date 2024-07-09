@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { FaRankingStar } from "react-icons/fa6";
 import Spinner from "./Spinner";
 
-const LeaderBoard = ({showpopup}) => {
+
+const LeaderBoard = () => {
     const [playerdetails, setPlayerdetails] = useState([]);
     const [showfriends, setShowfriends] = useState(false);
     const [friends, setFriends] = useState([]);
@@ -39,7 +40,7 @@ const LeaderBoard = ({showpopup}) => {
             setFriends(data.playerFriends);
         }
         fetchFriends();
-    },[showpopup])
+    },[])
     const handleFriends = ()=>{
         setShowfriends(prev => !prev);
     }
@@ -51,8 +52,10 @@ const LeaderBoard = ({showpopup}) => {
         <table className="leaderboard">
                 <thead className="leaderboard-head">
                     <div className="leaderboard-title">
-                       <FaRankingStar />
-                        <div>Global Rankings</div>
+                        <div style={{display:'flex', justifyContent:'space-between' ,width:'140px', alignItems:'center'}}>
+                            <FaRankingStar />
+                            <div>Global Rankings</div>
+                        </div>
                         <label className="show-friends-btn">
                         <input
                             type="checkbox"

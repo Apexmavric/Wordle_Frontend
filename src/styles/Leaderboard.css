@@ -1,0 +1,77 @@
+.leaderboard-container{
+    position: absolute;
+    width: 100%;
+     top: 35%;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     height: 50%;
+     z-index: 0;
+     /* outline: 1px solid red; */
+     
+    }
+    .leaderboard{
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    /* outline: 4px solid green; */
+    color: aliceblue;
+    width: 80%;
+    height: 100%;
+    /* position: relative; */
+    /* outline: 1px solid  blue; */
+  }
+
+  .show-friends-btn{
+    /* outline: 1px solid red; */
+    /* right: 10px; */
+  }
+  .leaderboard-head{
+    /* outline: 1px solid white; */
+  }
+  .leaderboard-hc{
+    /* outline: 1px solid white; */
+    padding: 10px;
+    width: 100%;
+  }
+  .leaderboard-hr{
+    display: flex;
+    justify-content: center;
+    /* width: 100%; */
+  }
+  .leaderboard-title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap : 10px;
+    padding: 10px;
+    background-color:  #312f2f;
+  }
+  .table-data{
+    width: 100%;
+    /* outline: 1px solid white; */
+    display: flex;
+    justify-content: center;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 15px;
+  }
+  .table-body{
+    width: 100%;
+  }
+  .table-body-container{
+    display: flex;
+    justify-content: center;
+    max-height: 300px;
+    overflow-y: scroll;
+  }
+  .table-body-container::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .table-body-row
+  { 
+    position: relative;
+    top: 10px;
+    outline: 1px solid rgba(63, 62, 62, 0.2);
+    display: flex;
+    /* background-color: aliceblue; */
+    justify-items:center;
+  }

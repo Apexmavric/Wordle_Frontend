@@ -9,9 +9,6 @@ body{
   height: 100%;
   height: 100%;
   spellcheck:false;
-  /* background-color: #116bfc; */
-  /* padding: 0; */
-  /* height: 200px; */
   z-index: 0;
 }
 .App{
@@ -21,39 +18,23 @@ body{
   height: 100vh;
   width: 100vw;
   position: relative;
-  /* padding: 0; */
 }
-
-
-
 .account-details-par{
-  position: absolute;
-  top:10px;
-  right:20px;
-  /* outline:1px solid; */
-  font-weight: 80;
-  width: 250px;
-  font-size: 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  user-select: none;
-  /* border:1px solid; */
-  /* outline: 1px rgb(116, 113, 113)solid  */
-  
-  border-radius: 5px;
-  /* color: aliceblue; */
+ 
 }
 .account-details{
+  position: relative;
+   /* display: ; */
   border: 1px rgb(116, 113, 113)solid;
+  border-radius: 10px;
   width : 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   user-select: none;
-  padding: 10px;
+  padding: 5px;
+  /* padding: 10px; */
 }
 .account-details:hover{
   cursor: pointer;
@@ -77,88 +58,37 @@ body{
   /* color: aliceblue; */
 }
 .acc-btn{
+  position: relative;
   display: flex;
-  width: 40%;
+  width: 100%;
+  /* outline:  1px solid blue; */
+  display: flex;
+  justify-content: center;
   align-items: center;
   gap:5px;
-  margin:5px;
-  text-decoration:none;
-  color: white;
+  padding: 10px 0px;
+  font-size: 1.2rem;
+  background-color: #383636;
+  z-index: 10;
+  text-decoration: none !important;
+  color:inherit;
 }
 .acc-btn :hover{
   cursor: pointer;
 }
-.leader-search-container{
-  
-  /* outline: 1px solid red;  */
-  position: absolute;
-  right:0px;
-  top: 320px;
-  height: 50%;
-  width: 80%;
-  display: flex;
+a:link{
+  text-decoration: none;
 }
-.leaderboard-container{
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-  width: 50%;
-  position: absolute;
-  height: 100%;
-  /* top : 15%; */
-  left: 100px;
-  outline: 1px solid rgb(87, 84, 84, 0.5);
-}
-.leaderboard{
-  /* outline: 4px solid green; */
+.account-options{
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px;
+  position: relative;
+  border-radius: 5px;
+  top:10px;
   color: aliceblue;
+  /* outline: 1px solid red; */
   width: 100%;
-  height: 50px;
-  /* position: relative; */
-  /* outline: 1px solid  blue; */
-}
-.leaderboard-head{
-  /* outline: 1px solid white; */
-}
-.leaderboard-hc{
-  /* outline: 1px solid white; */
-  padding: 10px;
-  width: 100%;
-}
-.leaderboard-hr{
-  display: flex;
-  justify-content: center;
-  /* width: 100%; */
-}
-.leaderboard-title{
-  display: flex;
-  gap : 10px;
-  padding: 10px;
-  background-color:  #312f2f;
-}
-.table-data{
-  width: 100%;
-  /* outline: 1px solid white; */
-  display: flex;
-  justify-content: center;
-  padding: 15px;
-}
-.table-body{
-  width: 100%;
-}
-.table-body-container{
-  display: flex;
-  justify-content: center;
-  max-height: 300px;
-  overflow-y: scroll;
-}
-.table-body-container::-webkit-scrollbar {
-  display: none;
 }
 
-.table-body-row{
-  /* outline: 1px solid green; */
-  display: flex;
-  justify-items:center;
-}
 
 .alphabet-keys{
   color: aliceblue;
@@ -172,7 +102,6 @@ body{
   text-align: center;
   margin: 5px;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-  
 } 
 .keyboard{
   width: 35%;
@@ -311,10 +240,7 @@ body{
 .profile-image:hover{
   transform: scale(1.1); 
 }
-.show-friends-btn{
-  position: absolute;
-  right: 20px;
-}
+
 .timer{
   position: absolute;
   left: 300px;
@@ -367,17 +293,6 @@ body{
 .animated{
   animation: block-animation 1.5s ease;
 }
-
-.create-room-page{
-  width: 100vw;
-  height: 100vh;
-  outline: 1px solid red;
-  padding: 0px;
-  /* position: relative; */
-  /* background-color: #116bfc; */
-  /* padding: 0px; */
-}
-
 
 @keyframes blur-back {
   from{

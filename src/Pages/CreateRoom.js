@@ -1,7 +1,6 @@
 import '../styles/Room.css'
 import React, { useEffect, useState } from "react";
-import AccountDetails from "../components/AccountDetails";
-import Sidebar from "../components/SideBar";
+import NavBar from '../components/NavBar';
 import { io } from "socket.io-client";
 import { useNavigate } from "react-router";
 import InviteFrineds from "../components/InviteFriends";
@@ -17,7 +16,7 @@ export default function CreateRoom() {
         }
     }
     localStorage.setItem('profile-pics', null);
-
+    const [isblur, setisBlur] = useState(false);
     const [socket, setSocket] = useState(null);
     const [room, setRoom] = useState(localStorage.getItem('room'));
     const [users, setUsers] = useState({ players: [], admin: "" });
@@ -181,25 +180,19 @@ export default function CreateRoom() {
     };
 
     return (
-        <div className="create-room-page">
-            {inviteFriends && <InviteFrineds setInviteFriends={setInvitefriends} socket={socket} />}
-            <div className={inviteFriends ? "MenuPage blur" : "MenuPage"} onClick={() => {
+            <div className={`MenuPage ${isblur ? ' ' : ' '}`} onClick={() => {
+                {inviteFriends && <InviteFrineds setInviteFriends={setInvitefriends} socket={socket} />}
                 if (blurred) {
                     setInvitefriends(false);
                     setBlurred(false);
                 }
             }}>
-                <div className="menu-navbar">
-                    <div className="menu-title">Wordle</div>
-                    <AccountDetails />
-                </div>
-                <Sidebar />
-                <MultiplayerButtons handleClick={handleClick} handleInvite={handleInvite} handleLeave={handleLeave} />
-                <div className="room-gamedetails-container">
-                    <RoomContainer room={room} handleCopy={handleCopy} copied={copied} users={users} name={name} socket={socket} setUsers={setUsers} profilePics={profilePics} />
-                    <GameContainer users={users} name={name} setRounds={setRounds} setTime={setTime} time={time} rounds={rounds} setStart={setStart} />
-                </div>
+            <NavBar setisBlur={setisBlur} val={0} wantNavbar={0}/> 
+            <MultiplayerButtons handleClick={handleClick} handleInvite={handleInvite} handleLeave={handleLeave}/>
+            <div className="room-gamedetails-container">
+                <RoomContainer room={room} handleCopy={handleCopy} copied={copied} users={users} name={name} socket={socket} setUsers={setUsers} profilePics={profilePics} />
+                <GameContainer users={users} name={name} setRounds={setRounds} setTime={setTime} time={time} rounds={rounds} setStart={setStart} />
             </div>
-        </div>
+            </div>
     );
 }
