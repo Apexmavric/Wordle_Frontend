@@ -7,6 +7,7 @@ import InviteFrineds from "../components/InviteFriends";
 import MultiplayerButtons from "../multiplayer/Multiplayerbuttons";
 import GameContainer from "../components/GameContainer";
 import RoomContainer from '../components/RoomContainers';
+import RequestPopup from '../components/RequestPopup';
 
 export default function CreateRoom() {
     const keysToKeep = ['name', 'token', 'room', 'prev-page'];
@@ -29,6 +30,9 @@ export default function CreateRoom() {
     const token = localStorage.getItem('token');
     const [inviteFriends, setInvitefriends] = useState(false);
     const [blurred, setBlurred] = useState(false);
+    const [requestPopup, setRequestpopup] = useState(false);
+    const [playerName, setPlayerName] = useState(null);
+    const [fetchedToken, setFetchedtoken] = useState(null);
     const [profilePics, setProfilePics] = useState(new Map(JSON.parse(localStorage.getItem('profile-pics'))));
     const handleClick = (e) => {
         e.preventDefault();
@@ -108,6 +112,14 @@ export default function CreateRoom() {
             newSocket.on('new-player', (data) => {
                 console.log('Someones profile data is being fetched!');                handleNewPlayer(data);
               });
+              newSocket.on('join-request-player', (fetchedToken, playerName)=>{
+                setRequestpopup(true);
+                setPlayerName(playerName);
+                setFetchedtoken(fetchedToken);
+                setTimeout(()=>{
+                    setRequestpopup(false);
+                },10000);
+            })
         });
 
         return () => {
@@ -174,21 +186,19 @@ export default function CreateRoom() {
     const handleInvite = (e) => {
         e.preventDefault();
         console.log('I am being clicked');
-        setBlurred(true);
         setInvitefriends(true);
         console.log(inviteFriends);
     };
 
     return (
-            <div className={`MenuPage ${isblur ? ' ' : ' '}`} onClick={() => {
-                {inviteFriends && <InviteFrineds setInviteFriends={setInvitefriends} socket={socket} />}
-                if (blurred) {
-                    setInvitefriends(false);
-                    setBlurred(false);
-                }
+            <div className={`MenuPage ${isblur ? ' ' : ' '}`} onClick={() => {    
             }}>
+            {inviteFriends && <InviteFrineds setInviteFriends={setInvitefriends} socket={socket} />}
             <NavBar setisBlur={setisBlur} val={0} wantNavbar={0}/> 
             <MultiplayerButtons handleClick={handleClick} handleInvite={handleInvite} handleLeave={handleLeave}/>
+            {
+                 requestPopup && <RequestPopup/>
+            }
             <div className="room-gamedetails-container">
                 <RoomContainer room={room} handleCopy={handleCopy} copied={copied} users={users} name={name} socket={socket} setUsers={setUsers} profilePics={profilePics} />
                 <GameContainer users={users} name={name} setRounds={setRounds} setTime={setTime} time={time} rounds={rounds} setStart={setStart} />

@@ -25,18 +25,19 @@
   
   .game-container{
     position: absolute;
-    width: 30%;
+    width: 25%;
     right: 7%;
     height: 100%;
+    /* outline: 1px solid red; */
     /* height: 350px; */
   }
   
   .invite-friends{
     position: absolute;
     height: 300px;
-    width: 400px;
+    width: 50%;
     text-align: center;
-    left: 50%;
+    /* left: 50%; */
     top:40%;
     z-index: 5;
     /* outline: 1px solid red; */
@@ -309,7 +310,7 @@
     font-weight: 80;
     outline: 1px solid rgb(52, 51, 51);
     border-radius: 5px;
-    font-size: 20px;
+    font-size: 3vh;
   }
   
   .start-game-btn{
@@ -370,4 +371,34 @@
     display: flex;
     justify-content: center;
     /* align-items: center; */
+  }
+
+  .search-heading{
+    /* width: 50%; */
+  }
+  .search-results-container{
+    /* width: 50%; */
+  }
+
+  .room-input-container{
+    position: absolute;
+    outline: 1px solid blue;
+    width: 100%;
+    top: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* justify-content: baseline; */
+  }
+
+  .join-room-button{
+    position: relative;
+    height: 100%;
+    background-color: #1F75FE;
+    height: 30px;
+    width: 100px;
+  }
+
+  .search-message-container{
+    top: 300px;
   }

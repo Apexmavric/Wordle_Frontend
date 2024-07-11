@@ -12,8 +12,6 @@ const ProfilePage = ()=>{
               </div>
               <Sidebar></Sidebar>
               <ChangeProfile/>
-              {/* <ChangeUsername/> */}
-              {/* <ChangeEmail/> */}
         </div>
 
     );

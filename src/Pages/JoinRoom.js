@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import AccountDetails from "../components/AccountDetails";
 import Sidebar from "../components/SideBar";
 import { io } from "socket.io-client";
@@ -9,8 +9,15 @@ import { FaRegCopy, FaCopy } from "react-icons/fa6";
 import InviteFrineds from "../components/InviteFriends";
 import { Link } from "react-router-dom";
 import RequestPopup from "../components/RequestPopup";
-
-
+import BlurContext from "../context/Playercontext";
+import NavBar from "../components/NavBar";
+import MultiplayerButtons from "../multiplayer/Multiplayerbuttons";
+import RoomContainer from "../components/RoomContainers";
+import ProfilePic from "../components/ProfilePic";
+import GameContainer from "../components/GameContainer";
+import InputBar from "../components/InputBar";
+import ButtonsWithInfo from "../components/ButtonsWithInfo";
+import Popup from "../components/Popup";
 export default function CreateRoom() {
     const keysToKeep = ['name', 'token', 'room', 'prev-page'];
     for (let key in localStorage) {
@@ -18,13 +25,20 @@ export default function CreateRoom() {
             localStorage.removeItem(key);
         }
     }
+    const {isblur, setisBlur} = useContext(BlurContext);
     const [socket, setSocket] = useState('');
+    const [col, setCol] = useState('');
+    const [temproom, setTempRoom] = useState(null);
     const [room, setRoom] = useState(localStorage.getItem('room'));
     const [froom, setFroom] = useState(localStorage.getItem('room'));
     const [users, setUsers] = useState({players : [], admin : ""});
     const [time, setTime] = useState(localStorage.getItem('time') || 30);
     const [rounds, setRounds] = useState(localStorage.getItem('rounds') || 2);
     const [start, setStart] = useState(localStorage.getItem('start') || false);
+    const [profilePics, setProfilePics] = useState(new Map(JSON.parse(localStorage.getItem('profile-pics'))));
+    const [showPopup, setShowPopup] = useState(false);
+    const [message, setMessage]=useState(null);
+    localStorage.setItem('profile-pics', null);
     const [inviteFriends, setInvitefriends] = useState(false);
     const [copied, setCopied] = useState(false);
     const [requestPopup, setRequestpopup] = useState(false);
@@ -78,7 +92,6 @@ export default function CreateRoom() {
         {
                 newSocket.on('get-game-info',(e)=>{
                 const {Time, Rounds} = e; 
-                console.log(`Yeh time hai : ${Time} aur yeh rounds hai ${Rounds}`)
                 localStorage.setItem('time', Time);
                 localStorage.setItem('rounds', Rounds);
                 setTime(Time);
@@ -166,16 +179,15 @@ export default function CreateRoom() {
         e.preventDefault();
         setRoom(e.target.value);
     }
-    
     const handleClick = (e)=>{
         e.preventDefault();
-        localStorage.setItem('room', room);
         if(socket)
-        {
-            socket.emit('join-room', localStorage.getItem('room'), name);
-            socket.on('users', (e) => {
-                setUsers(e);
-            });
+        {   
+            console.log(`Room wit a : ${temproom}`);
+            socket.emit('join-request', temproom);
+            setShowPopup(true);
+            setMessage("Request sent successfully");
+            setCol(1);
         }
     }
     const handleLeave = ()=>{
@@ -211,7 +223,6 @@ export default function CreateRoom() {
 
     const handleInvite = (e)=>{
         e.preventDefault();
-        console.log('I am being clicked');
         setInvitefriends(true);
         console.log(inviteFriends);
     }
@@ -222,7 +233,44 @@ export default function CreateRoom() {
         setStart(true);
     }
 
+    const handleNewPlayer = (e) => {
+        let profilePicsMap;
+        if (localStorage.getItem('profile-pics') === null) {
+          profilePicsMap = new Map();
+        } else {
+          const storedArr = localStorage.getItem('profile-pics');
+          const parsedArr = JSON.parse(storedArr);
+          profilePicsMap = new Map(parsedArr);
+        }
+        const { contentType, data: imageData } = e;
+        const blob = new Blob([new Uint8Array(imageData)], { type: contentType });
+        const imageUrl = URL.createObjectURL(blob);
+        profilePicsMap.set(e.player, imageUrl);
+        console.log(profilePicsMap);
+        setProfilePics(profilePicsMap);
+        const arr = Array.from(profilePicsMap);
+        const mapString = JSON.stringify(arr);
+        localStorage.setItem('profile-pics', mapString);
+      };
     return (
-       <div></div>
+        <div className={`MenuPage ${isblur ? ' ' : ' '}`} onClick={() => {    
+        }}>
+        {inviteFriends && <InviteFrineds setInviteFriends={setInvitefriends} socket={socket} />}
+            <NavBar setisBlur={setisBlur} val={0} wantNavbar={0}/> 
+            <div className="room-input-container">
+                <InputBar placeholder="Enter your room id!" val={temproom} setVal={setTempRoom} col={2} setCol={setCol}/>
+                <button className="join-room-button" onClick={handleClick}>Join Room</button>
+                <div className="search-message-container">
+                 { message && <Popup col={col} setAnimation={false} setMessage={setMessage} message={message}/>}
+                 </div>
+            </div>
+            {
+                // isblur && {<MultiplayerButtons handleClick={handleClick} handleInvite={handleInvite} handleLeave={handleLeave}/>
+                // <div className="room-gamedetails-container">
+                //     <RoomContainer room={room} handleCopy={handleCopy} copied={copied} users={users} name={name} socket={socket} setUsers={setUsers} profilePics={profilePics} />
+                //     <GameContainer users={users} name={name} setRounds={setRounds} setTime={setTime} time={time} rounds={rounds} setStart={setStart} />
+                // </div>}
+            }
+        </div>
     );
 }

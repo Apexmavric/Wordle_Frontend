@@ -598,6 +598,6 @@ a:link{
     width: 500px;
   }
 } */
-.blur-effect {
-  filter: blur(5px); 
+.blur{
+  filter: blur(2px); 
 }

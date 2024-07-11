@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState , useContext} from 'react';
 import { Link } from 'react-router-dom';
 import { RxAvatar } from "react-icons/rx";
-
+import BlurContext from '../context/Playercontext';
 import { MdOutlineExitToApp } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 
@@ -23,8 +23,9 @@ const AccountDetails = () => {
         navigate('/');
     }
     name = capitalizeFirstLetter(name);
+    const {isblur} = useContext(BlurContext);
     return (
-        <div className='account-details-par'>
+        <div className={`account-details-par  ${isblur ? 'blur' : ''}`}>
             <div className="account-details" onClick={handleClick}>{name}</div>
             {showdetails && (<div className='account-options'>
                 <Link to = '/profile' className='acc-btn'>

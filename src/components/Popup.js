@@ -4,9 +4,8 @@ import { ReactComponent as CorrectSVG } from '../SvgIcons/1930264_check_complete
 import { toInteger } from 'lodash';
 
 const Popup = ({ col, message, setMessage, setAnimation, time = 2000 }) => {
-    const [showPopup, setShowPopup] = useState(true); // Initially show popup
+    const [showPopup, setShowPopup] = useState(true);
     col = toInteger(col);
-
     useEffect(() => {
         if (setAnimation) {
             setShowPopup(true);
@@ -22,7 +21,6 @@ const Popup = ({ col, message, setMessage, setAnimation, time = 2000 }) => {
             };
         }
     }, [message, setAnimation, time]);
-
     return (
         <div className={`popup-container ${showPopup && setAnimation ? 'pop-up-animation' : ''}`}>
             <div className="verify-icon">

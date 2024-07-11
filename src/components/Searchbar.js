@@ -66,7 +66,6 @@ const SearchBar=({showpopup, setShowpopup})=>{
     }
     const handlremoveFriend = async(id)=>{
         try {
-            setShowpopup(0);
             const response = await fetch(process.env.REACT_APP_BACKEND_URL +"/api/v1/player/delete", {
                 method: "DELETE",
                 headers: {

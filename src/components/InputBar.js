@@ -1,6 +1,6 @@
 const InputBar = ({ placeholder, val, setVal, col, setCol, msg, type, center }) => {
   const handleChange = (e) => {
-    // console.log(e.target.value);
+    console.log(e.target.value);
     setVal(e.target.value);
     setCol(2);
   };
