@@ -1,8 +1,7 @@
 import { useEffect, useRef } from "react";
 import Audio from "./Music/Audio";
 
-const RequestPopup =({admin, socket, fetchedToken, setRequestpopup, setRoom, message, emitEvent, listenEvent})=>{
-    // const audioRef = useRef(null);
+const RequestPopup =({admin, socket, fetchedToken, setRequestpopup, setFetchedToken , setRoom, message, emitEvent, listenEvent})=>{
     const acceptHandler = ()=>{
         if(socket)
         {   
@@ -15,10 +14,10 @@ const RequestPopup =({admin, socket, fetchedToken, setRequestpopup, setRoom, mes
                 setRoom(roomName);
                })  
             }
+            setFetchedToken(false);
             setRequestpopup(false);
         }
     }
-    
     return(
         <>
         <div className="request-popup-container">

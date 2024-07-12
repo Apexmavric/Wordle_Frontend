@@ -6,9 +6,11 @@ body{
   background-color:#151414;
   text-transform: capitalize;
   position: relative;
+  overflow-y: hidden;
   height: 100%;
   height: 100%;
   spellcheck:false;
+  overflow-x: hidden;
   z-index: 0;
 }
 .App{

@@ -32,7 +32,8 @@ export default function CreateRoom() {
     const [blurred, setBlurred] = useState(false);
     const [requestPopup, setRequestpopup] = useState(false);
     const [playerName, setPlayerName] = useState(null);
-    const [fetchedToken, setFetchedtoken] = useState(null);
+    const [message, setMessage] = useState(null);
+    const [fetchedToken, setFetchedtoken] = useState();
     const [profilePics, setProfilePics] = useState(new Map(JSON.parse(localStorage.getItem('profile-pics'))));
     const handleClick = (e) => {
         e.preventDefault();
@@ -75,7 +76,6 @@ export default function CreateRoom() {
         const { contentType, data: imageData } = e;
         const blob = new Blob([new Uint8Array(imageData)], { type: contentType });
         const imageUrl = URL.createObjectURL(blob);
-        // console.log(`Image  for ${e.player}: ${imageUrl}`);
         profilePicsMap.set(e.player, imageUrl);
         console.log(profilePicsMap);
         setProfilePics(profilePicsMap);
@@ -115,7 +115,9 @@ export default function CreateRoom() {
               newSocket.on('join-request-player', (fetchedToken, playerName)=>{
                 setRequestpopup(true);
                 setPlayerName(playerName);
+                console.log(fetchedToken);
                 setFetchedtoken(fetchedToken);
+                setMessage(`${playerName} has requested to join the game!`);
                 setTimeout(()=>{
                     setRequestpopup(false);
                 },10000);
@@ -197,7 +199,9 @@ export default function CreateRoom() {
             <NavBar setisBlur={setisBlur} val={0} wantNavbar={0}/> 
             <MultiplayerButtons handleClick={handleClick} handleInvite={handleInvite} handleLeave={handleLeave}/>
             {
-                 requestPopup && <RequestPopup/>
+                <div className='pop-up-container'>
+                   { requestPopup && <RequestPopup message={message} setRequestpopup={setRequestpopup} fetchedToken={fetchedToken} socket={socket} setRoom={setRoom} emitEvent="admin-request-accept" listenEvent="admin-request-authenticated" setFetchedToken={setFetchedtoken}/>}
+                </div>
             }
             <div className="room-gamedetails-container">
                 <RoomContainer room={room} handleCopy={handleCopy} copied={copied} users={users} name={name} socket={socket} setUsers={setUsers} profilePics={profilePics} />
