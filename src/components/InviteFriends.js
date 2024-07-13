@@ -48,6 +48,7 @@ const InviteFriends = ({ setInviteFriends, socket }) => {
       setisBlur(false);
     };
   }, [setisBlur]);
+  const text = friends.length > 0 ? "Invite your friends directly using this feature!" : `You don't have any friends. \n\ Add friends to use this feature!`;
 
   return (
     <div className="friends-page-container">
@@ -61,6 +62,7 @@ const InviteFriends = ({ setInviteFriends, socket }) => {
             </div>
           ))}
         </div>
+        <span style={{color : 'white', fontFamily:'revert', fontWeight:'10'}}>{text}</span>
       </div>
     </div>
   );

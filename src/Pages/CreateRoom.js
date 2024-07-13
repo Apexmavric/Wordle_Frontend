@@ -10,13 +10,13 @@ import RoomContainer from '../components/RoomContainers';
 import RequestPopup from '../components/RequestPopup';
 
 export default function CreateRoom() {
-    const keysToKeep = ['name', 'token', 'room', 'prev-page'];
-    for (let key in localStorage) {
+    // localStorage.setItem('profile-pics', null);
+    const keysToKeep = ['name', 'token', 'room', 'prev-page', 'profile-pics'];
+    Object.keys(localStorage).forEach(key => {
         if (!keysToKeep.includes(key)) {
             localStorage.removeItem(key);
         }
-    }
-    localStorage.setItem('profile-pics', null);
+    });
     const [isblur, setisBlur] = useState(false);
     const [socket, setSocket] = useState(null);
     const [room, setRoom] = useState(localStorage.getItem('room'));
@@ -41,6 +41,14 @@ export default function CreateRoom() {
         setStart(true);
     };
 
+
+    useEffect(() => {
+        
+            const arr = Array.from(profilePics);
+            const mapString = JSON.stringify(arr);
+            localStorage.setItem('profile-pics', mapString);
+      }, [profilePics]);
+
     useEffect(() => {
         const verify_token = async () => {
             try {
@@ -63,27 +71,19 @@ export default function CreateRoom() {
         };
         verify_token();
     }, [token, navigate]); 
-    const handleNewPlayer = (e) => {
-        let profilePicsMap;
-      
-        if (localStorage.getItem('profile-pics') === null) {
-          profilePicsMap = new Map();
-        } else {
-          const storedArr = localStorage.getItem('profile-pics');
-          const parsedArr = JSON.parse(storedArr);
-          profilePicsMap = new Map(parsedArr);
-        }
-        const { contentType, data: imageData } = e;
-        const blob = new Blob([new Uint8Array(imageData)], { type: contentType });
-        const imageUrl = URL.createObjectURL(blob);
-        profilePicsMap.set(e.player, imageUrl);
-        console.log(profilePicsMap);
-        setProfilePics(profilePicsMap);
-        const arr = Array.from(profilePicsMap);
-        const mapString = JSON.stringify(arr);
-        localStorage.setItem('profile-pics', mapString);
-      };
 
+    const handleNewPlayer = (e) => {
+        // console.log(e);
+        const profilePicsMap = profilePics;
+        e.forEach(player => {
+          const { contentType, data: imageData } = player;
+          const blob = new Blob([new Uint8Array(imageData)], { type: contentType });
+          const imageUrl = URL.createObjectURL(blob);
+          profilePicsMap.set(player.player, imageUrl);
+        });
+        setProfilePics(profilePics);
+      };
+      
     useEffect(() => {
         const newSocket = io(process.env.REACT_APP_BACKEND_URL, {
             auth: {
@@ -98,24 +98,28 @@ export default function CreateRoom() {
                     localStorage.setItem('room', id);
                     setRoom(id);
                 });
-                newSocket.on('users', (e) => {
-                    setUsers(e);
-                });
+             
             } else {
                 setRoom(localStorage.getItem('room'));
                 newSocket.emit('join-room', localStorage.getItem('room'), name);
-                newSocket.on('users', (e) => {
-                    setUsers(e);
-                });
             }
+            newSocket.on('users', (e) => {
+                console.log('users ', e);
+                setUsers(e);
+            });
+            newSocket.on('users-updated', (e) => {
+                console.log('users ', e);
+                setUsers(e);
+            });
             newSocket.emit('refresh-ids', name);
             newSocket.on('new-player', (data) => {
-                console.log('Someones profile data is being fetched!');                handleNewPlayer(data);
+                // console.log('Someones profile data is being fetched!');
+                 handleNewPlayer(data);
               });
               newSocket.on('join-request-player', (fetchedToken, playerName)=>{
                 setRequestpopup(true);
                 setPlayerName(playerName);
-                console.log(fetchedToken);
+                // console.log(fetchedToken);
                 setFetchedtoken(fetchedToken);
                 setMessage(`${playerName} has requested to join the game!`);
                 setTimeout(()=>{
@@ -126,7 +130,7 @@ export default function CreateRoom() {
 
         return () => {
             console.log(`Cleaning up socket listeners`);
-            newSocket.off('new-player', handleNewPlayer);
+            newSocket.off('new-player');
             newSocket.off('connect');
             newSocket.off('room-created');
             newSocket.off('users');
@@ -137,7 +141,7 @@ export default function CreateRoom() {
 
     useEffect(() => {
         if (socket && start) {
-            console.log('start game signal');
+            // console.log('start game signal');
             socket.emit('start-game', localStorage.getItem('room'), name, rounds, time);
             localStorage.removeItem('hasended');
             localStorage.setItem('prev-page', 'create');
@@ -156,8 +160,6 @@ export default function CreateRoom() {
     useEffect(() => {
         if (socket) {
             if (localStorage.getItem('room')) {
-                console.log('sending time and rounds info');
-                console.log(time, rounds);
                 if (users && users.admin === name) socket.emit('game-infos', room, rounds, time);
             }
         }
@@ -168,7 +170,7 @@ export default function CreateRoom() {
             if (localStorage.getItem('room')) {
                 socket.emit('leave-room', localStorage.getItem('room'), name);
                 setUsers("");
-                localStorage.removeItem('profile-pics');
+                // localStorage.removeItem('profile-pics');
                 localStorage.removeItem('room');
                 localStorage.removeItem('rounds');
                 localStorage.removeItem('time');
@@ -187,9 +189,8 @@ export default function CreateRoom() {
 
     const handleInvite = (e) => {
         e.preventDefault();
-        console.log('I am being clicked');
+        
         setInvitefriends(true);
-        console.log(inviteFriends);
     };
 
     return (

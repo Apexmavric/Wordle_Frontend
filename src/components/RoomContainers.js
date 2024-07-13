@@ -8,6 +8,7 @@ const RoomContainer = ({room, handleCopy, copied, users, name, socket, setUsers,
         <div className={`room-players-container ${isblur ? 'blur' : ''}`}>
         <div className="room-players-title"> 
             <div className="room-players-title-text">Room {room}</div>
+            <div style={{position : 'absolute', left : '50px'}}>Admin : {users.admin}</div>
             <div className="copy-btn">
                     {!copied ? <FaRegCopy onClick={handleCopy}/> :  <FaCopy/>}
                     {copied ? <div>Copied!</div> : null}

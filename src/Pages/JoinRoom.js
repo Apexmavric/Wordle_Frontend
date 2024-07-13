@@ -18,6 +18,7 @@ import GameContainer from "../components/GameContainer";
 import InputBar from "../components/InputBar";
 import ButtonsWithInfo from "../components/ButtonsWithInfo";
 import Popup from "../components/Popup";
+
 export default function CreateRoom() {
     const keysToKeep = ['name', 'token', 'room', 'prev-page'];
     for (let key in localStorage) {
@@ -25,19 +26,19 @@ export default function CreateRoom() {
             localStorage.removeItem(key);
         }
     }
-    const {isblur, setisBlur} = useContext(BlurContext);
-    const [socket, setSocket] = useState('');
+    const { isblur, setisBlur } = useContext(BlurContext);
+    const [socket, setSocket] = useState(null);
     const [col, setCol] = useState('');
     const [temproom, setTempRoom] = useState(null);
     const [room, setRoom] = useState(localStorage.getItem('room'));
     const [froom, setFroom] = useState(localStorage.getItem('room'));
-    const [users, setUsers] = useState({players : [], admin : ""});
+    const [users, setUsers] = useState({ players: [], admin: "" });
     const [time, setTime] = useState(localStorage.getItem('time') || 30);
     const [rounds, setRounds] = useState(localStorage.getItem('rounds') || 2);
     const [start, setStart] = useState(localStorage.getItem('start') || false);
     const [profilePics, setProfilePics] = useState(new Map(JSON.parse(localStorage.getItem('profile-pics'))));
     const [showPopup, setShowPopup] = useState(false);
-    const [message, setMessage]=useState(null);
+    const [message, setMessage] = useState(null);
     localStorage.setItem('profile-pics', null);
     const [inviteFriends, setInvitefriends] = useState(false);
     const [copied, setCopied] = useState(false);
@@ -47,10 +48,11 @@ export default function CreateRoom() {
     const navigate = useNavigate();
     const name = localStorage.getItem('name');
     const token = localStorage.getItem('token');
-    useEffect(()=>{
-        const verify_token = async()=>{
+
+    useEffect(() => {
+        const verify_token = async () => {
             try {
-                const response = await fetch(process.env.REACT_APP_BACKEND_URL +"/api/v1/verify/verify_token", {
+                const response = await fetch(process.env.REACT_APP_BACKEND_URL + "/api/v1/verify/verify_token", {
                     method: "GET",
                     headers: {
                         'Content-Type': 'application/json',
@@ -59,130 +61,126 @@ export default function CreateRoom() {
                 });
                 let data = await response.json();
                 console.log(data);
-                if(data.msg === 'Authentication Invalid')
-                {
+                if (data.msg === 'Authentication Invalid') {
                     localStorage.clear();
                     alert('Your session has expired try logging in again !!');
                     navigate('/');
-                }   
+                }
             } catch (error) {
                 console.error(error);
-            } 
-        }
-        verify_token();
-    }, [])
-   useEffect(() => {
-    const newSocket = io(process.env.REACT_APP_BACKEND_URL,{
-        auth:{
-            token : token
-        }
-    });
-    setSocket(newSocket);
-    newSocket.on('connect', () => {
-        console.log(newSocket.id);
-        setSocket(newSocket);
-        if (localStorage.getItem('room')) {
-            console.log(room);
-            newSocket.emit('join-room', localStorage.getItem('room'), name);
-            newSocket.on('users', (e) => {
-                setUsers(e);
-            });
-        }
-        if(users && users.admin !== name)
-        {
-                newSocket.on('get-game-info',(e)=>{
-                const {Time, Rounds} = e; 
-                localStorage.setItem('time', Time);
-                localStorage.setItem('rounds', Rounds);
-                setTime(Time);
-                setRounds(Rounds);
-            })
-        }
-        newSocket.on('user-left', ()=>{
-            localStorage.removeItem('room');
-            setUsers("");
-            setFroom("");
-            setRoom("");
-        })
-        newSocket.emit('refresh-ids', name);
-        newSocket.on('start-game-signal',()=>{
-            localStorage.setItem('start', true);
-            localStorage.removeItem('hasended');
-            localStorage.setItem('prev-page', 'join');
-            navigate('/multi');
-            console.log('start-game-signal is called');
-        })
-        newSocket.on('invite-request', (fetchedToken, adminName)=>{
-            setRequestpopup(true);
-            setAdmin(adminName);
-            setFetchedtoken(fetchedToken);
-            setTimeout(()=>{
-                setRequestpopup(false);
-            },10000);
-        })
-    });
-    return (()=>{
-        
-        if(!isNaN(localStorage.getItem('start')))
-        {   
-            console.log("return function is being called");
-            newSocket.emit('leave-room' , localStorage.getItem('room'), name);
-            setUsers("");
-            localStorage.removeItem('room');
-            localStorage.removeItem('rounds');
-            localStorage.removeItem('time');
-        }
-        if(!isNaN(localStorage.getItem('start')))
-        newSocket.off('invite-request');
-        newSocket.off('start-game-signal');
-    })
-}, []);
-
-
-
-
-    useEffect(()=>{
-        if(socket)
-        {       
-            if(localStorage.getItem('room'))
-            {   
-                console.log('sending time and rounds info');
-                if(users && users.admin === name) socket.emit('game-infos',room, rounds, time);
             }
         }
-    },[rounds, time])
+        verify_token();
+    }, []);
 
-    useEffect(()=>{
-        if(socket)
-        {
-            socket.on('users', (e)=>{
+    useEffect(() => {
+        const newSocket = io(process.env.REACT_APP_BACKEND_URL, {
+            auth: {
+                token: token
+            }
+        });
+        setSocket(newSocket);
+        newSocket.on('connect', () => {
+            console.log(newSocket.id);
+            setSocket(newSocket);
+            if (localStorage.getItem('room')) {
+                console.log(room);
+                newSocket.emit('join-room', localStorage.getItem('room'), name);
+                newSocket.on('users', (e) => {
+                    setUsers(e);
+                });
+            }
+            if (users && users.admin !== name) {
+                newSocket.on('get-game-info', (e) => {
+                    const { Time, Rounds } = e;
+                    localStorage.setItem('time', Time);
+                    localStorage.setItem('rounds', Rounds);
+                    setTime(Time);
+                    setRounds(Rounds);
+                });
+            }
+            newSocket.on('user-left', () => {
+                localStorage.removeItem('room');
+                setUsers("");
+                setFroom("");
+                setRoom("");
+            });
+            newSocket.emit('refresh-ids', name);
+            newSocket.on('start-game-signal', () => {
+                localStorage.setItem('start', true);
+                localStorage.removeItem('hasended');
+                localStorage.setItem('prev-page', 'join');
+                navigate('/multi');
+                console.log('start-game-signal is called');
+            });
+            newSocket.on('invite-request', (fetchedToken, adminName) => {
+                setRequestpopup(true);
+                setAdmin(adminName);
+                setFetchedtoken(fetchedToken);
+                setTimeout(() => {
+                    setRequestpopup(false);
+                }, 10000);
+            });
+            newSocket.on('join-room-authenticated', (roomName) => {
+                console.log(roomName);
+                setRoom(roomName);
+                localStorage.setItem('room', roomName);
+            });
+        });
+        return () => {
+            if (!isNaN(localStorage.getItem('start'))) {
+                console.log("return function is being called");
+                newSocket.emit('leave-room', localStorage.getItem('room'), name);
+                setUsers("");
+                localStorage.removeItem('room');
+                localStorage.removeItem('rounds');
+                localStorage.removeItem('time');
+                setRoom(null);
+            }
+            if (!isNaN(localStorage.getItem('start')))
+                newSocket.off('invite-request');
+            newSocket.off('start-game-signal');
+        }
+    }, []);
+
+    useEffect(() => {
+        if (socket) {
+            if (localStorage.getItem('room')) {
+                console.log('sending time and rounds info');
+                if (users && users.admin === name) socket.emit('game-infos', room, rounds, time);
+            }
+        }
+    }, [rounds, time]);
+
+    useEffect(() => {
+        if (socket) {
+            socket.on('users', (e) => {
                 setUsers(e);
             })
             setRoom(localStorage.getItem('room'));
         }
-    }, [requestPopup])
-    useEffect(()=>{
-        if(socket && time && start)
-        {   
+    }, [requestPopup]);
+
+    useEffect(() => {
+        if (socket && time && start) {
             socket.emit('start-game', localStorage.getItem('room'), name, rounds, time);
             console.log('start-game-signal is called');
         }
-        return(()=>{
-            if(socket)
-            {
+        return () => {
+            if (socket) {
                 socket.off('start-game');
             }
-        })
-    },[start])
+        }
+    }, [start]);
 
-    const RoomChangeHandler = (e)=>{
+    const RoomChangeHandler = (e) => {
         e.preventDefault();
         setRoom(e.target.value);
     }
-    const handleClick = (e)=>{
+
+    const handleClick = (e) => {
         e.preventDefault();
-        if(socket)
-        {   
+        if (socket) {
             console.log(`Room wit a : ${temproom}`);
             socket.emit('join-request', temproom);
             setShowPopup(true);
@@ -190,57 +188,56 @@ export default function CreateRoom() {
             setCol(1);
         }
     }
-    const handleLeave = ()=>{
-        if(socket)
-        {
-            socket.emit('leave-room' , localStorage.getItem('room'), name);
-            setUsers("");
+
+    const handleLeave = () => {
+        if (socket) {
+            socket.emit('leave-room', localStorage.getItem('room'), name);
+            setUsers({ players: [], admin: "" });
             localStorage.removeItem('room');
-            setFroom("");
+            setRoom(null);
             socket.disconnect();
         }
     }
-    const handleKick = (playerName)=>{
-        if(socket)
-        {   
+
+    const handleKick = (playerName) => {
+        if (socket) {
             socket.emit('kick-out', localStorage.getItem('room'), playerName, users.admin);
-            socket.on('users' , (e)=>{
+            socket.on('users', (e) => {
                 setUsers(e);
                 setFroom(localStorage.getItem('room'));
-            })
+            });
         }
     }
-    const handleCopy = async()=>{
-        try{
+
+    const handleCopy = async () => {
+        try {
             await navigator.clipboard.writeText(room);
             setCopied(true);
-        }
-        catch(err)
-        {
+        } catch (err) {
             console.log(err);
         }
     }
 
-    const handleInvite = (e)=>{
+    const handleInvite = (e) => {
         e.preventDefault();
         setInvitefriends(true);
         console.log(inviteFriends);
     }
 
-    const handleStart = (e)=>{
+    const handleStart = (e) => {
         e.preventDefault();
-        localStorage.getItem('start', true);
+        localStorage.setItem('start', true);
         setStart(true);
     }
 
     const handleNewPlayer = (e) => {
         let profilePicsMap;
         if (localStorage.getItem('profile-pics') === null) {
-          profilePicsMap = new Map();
+            profilePicsMap = new Map();
         } else {
-          const storedArr = localStorage.getItem('profile-pics');
-          const parsedArr = JSON.parse(storedArr);
-          profilePicsMap = new Map(parsedArr);
+            const storedArr = localStorage.getItem('profile-pics');
+            const parsedArr = JSON.parse(storedArr);
+            profilePicsMap = new Map(parsedArr);
         }
         const { contentType, data: imageData } = e;
         const blob = new Blob([new Uint8Array(imageData)], { type: contentType });
@@ -251,25 +248,36 @@ export default function CreateRoom() {
         const arr = Array.from(profilePicsMap);
         const mapString = JSON.stringify(arr);
         localStorage.setItem('profile-pics', mapString);
-      };
+    };
+
+    console.log(room);
+
     return (
-        <div className={`MenuPage ${isblur ? ' ' : ' '}`} onClick={() => {    
-        }}>
-        {inviteFriends && <InviteFrineds setInviteFriends={setInvitefriends} socket={socket} />}
-            <NavBar setisBlur={setisBlur} val={0} wantNavbar={0}/> 
-            <div className="room-input-container">
-                <InputBar placeholder="Enter your room id!" val={temproom} setVal={setTempRoom} col={2} setCol={setCol}/>
+        <div className={`MenuPage ${isblur ? ' ' : ' '}`} onClick={() => { }}>
+            {inviteFriends && <InviteFrineds setInviteFriends={setInvitefriends} socket={socket} />}
+            <NavBar setisBlur={setisBlur} val={0} wantNavbar={0} />
+            {!room && <div className="room-input-container">
+                <InputBar placeholder="Enter your room id!" val={temproom} setVal={setTempRoom} col={2} setCol={setCol} />
                 <button className="join-room-button" onClick={handleClick}>Join Room</button>
+                <small style={{position: 'absolute' , bottom : '-100px'}}>
+                   A request would be sent to the admin of the room!
+                   <br></br>
+                   Once the admin accepts the request, you automatically enter the room
+                </small>
                 <div className="search-message-container">
-                 { message && <Popup col={col} setAnimation={false} setMessage={setMessage} message={message}/>}
-                 </div>
-            </div>
+                    {message && <Popup col={col} setAnimation={true} setMessage={setMessage} message={message} />}
+                </div>
+            </div>}
             {
-                // isblur && {<MultiplayerButtons handleClick={handleClick} handleInvite={handleInvite} handleLeave={handleLeave}/>
-                // <div className="room-gamedetails-container">
-                //     <RoomContainer room={room} handleCopy={handleCopy} copied={copied} users={users} name={name} socket={socket} setUsers={setUsers} profilePics={profilePics} />
-                //     <GameContainer users={users} name={name} setRounds={setRounds} setTime={setTime} time={time} rounds={rounds} setStart={setStart} />
-                // </div>}
+                room && (
+                    <>
+                        <MultiplayerButtons handleClick={handleClick} handleInvite={handleInvite} handleLeave={handleLeave} />
+                        <div className="room-gamedetails-container">
+                            <RoomContainer room={room} handleCopy={handleCopy} copied={copied} users={users} name={name} socket={socket} setUsers={setUsers} profilePics={profilePics} />
+                            <GameContainer users={users} name={name} setRounds={setRounds} setTime={setTime} time={time} rounds={rounds} setStart={setStart} />
+                        </div>
+                    </>
+                )
             }
         </div>
     );
