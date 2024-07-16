@@ -31,7 +31,7 @@ export default function CreateRoom() {
     const [col, setCol] = useState('');
     const [temproom, setTempRoom] = useState(null);
     const [room, setRoom] = useState(localStorage.getItem('room'));
-    const [froom, setFroom] = useState(localStorage.getItem('room'));
+    const [requestMessage, setRequestmessage] = useState(null);
     const [users, setUsers] = useState({ players: [], admin: "" });
     const [time, setTime] = useState(localStorage.getItem('time') || 30);
     const [rounds, setRounds] = useState(localStorage.getItem('rounds') || 2);
@@ -72,7 +72,7 @@ export default function CreateRoom() {
         }
         verify_token();
     }, []);
-
+    
     useEffect(() => {
         const newSocket = io(process.env.REACT_APP_BACKEND_URL, {
             auth: {
@@ -102,7 +102,7 @@ export default function CreateRoom() {
             newSocket.on('user-left', () => {
                 localStorage.removeItem('room');
                 setUsers("");
-                setFroom("");
+                // setFroom("");
                 setRoom("");
             });
             newSocket.emit('refresh-ids', name);
@@ -114,10 +114,11 @@ export default function CreateRoom() {
                 console.log('start-game-signal is called');
             });
             newSocket.on('invite-request', (fetchedToken, adminName) => {
-                setRequestpopup(true);
-                setAdmin(adminName);
+                console.log(fetchedToken, adminName);
+                setRequestmessage(`${adminName} is inviting you to play!`);
                 setFetchedtoken(fetchedToken);
-                setTimeout(() => {
+                setRequestpopup(true);
+                setTimeout(()=>{
                     setRequestpopup(false);
                 }, 10000);
             });
@@ -139,7 +140,7 @@ export default function CreateRoom() {
             }
             if (!isNaN(localStorage.getItem('start')))
                 newSocket.off('invite-request');
-            newSocket.off('start-game-signal');
+                newSocket.off('start-game-signal');
         }
     }, []);
 
@@ -183,7 +184,6 @@ export default function CreateRoom() {
         if (socket) {
             console.log(`Room wit a : ${temproom}`);
             socket.emit('join-request', temproom);
-            setShowPopup(true);
             setMessage("Request sent successfully");
             setCol(1);
         }
@@ -204,7 +204,7 @@ export default function CreateRoom() {
             socket.emit('kick-out', localStorage.getItem('room'), playerName, users.admin);
             socket.on('users', (e) => {
                 setUsers(e);
-                setFroom(localStorage.getItem('room'));
+                // setFroom(localStorage.getItem('room'));
             });
         }
     }
@@ -250,8 +250,6 @@ export default function CreateRoom() {
         localStorage.setItem('profile-pics', mapString);
     };
 
-    console.log(room);
-
     return (
         <div className={`MenuPage ${isblur ? ' ' : ' '}`} onClick={() => { }}>
             {inviteFriends && <InviteFrineds setInviteFriends={setInvitefriends} socket={socket} />}
@@ -265,13 +263,16 @@ export default function CreateRoom() {
                    Once the admin accepts the request, you automatically enter the room
                 </small>
                 <div className="search-message-container">
-                    {message && <Popup col={col} setAnimation={true} setMessage={setMessage} message={message} />}
+                    {message && !requestPopup && <Popup col={col} setAnimation={true} setMessage={setMessage} message={message} />}
                 </div>
             </div>}
+                <div className='pop-up-container'>
+                        {requestPopup && requestMessage && <RequestPopup message={requestMessage} admin={admin} setRequestpopup={setRequestpopup}  setFetchedToken={setFetchedtoken} fetchedToken={fetchedToken} socket={socket} setRoom={setRoom} emitEvent="join-request-accept" listenEvent="join-room-authenticated"/>}
+                </div>
             {
                 room && (
                     <>
-                        <MultiplayerButtons handleClick={handleClick} handleInvite={handleInvite} handleLeave={handleLeave} />
+                        <MultiplayerButtons admin={users.admin} handleClick={handleClick} handleInvite={handleInvite} handleLeave={handleLeave} />
                         <div className="room-gamedetails-container">
                             <RoomContainer room={room} handleCopy={handleCopy} copied={copied} users={users} name={name} socket={socket} setUsers={setUsers} profilePics={profilePics} />
                             <GameContainer users={users} name={name} setRounds={setRounds} setTime={setTime} time={time} rounds={rounds} setStart={setStart} />

@@ -1,12 +1,15 @@
 import { useEffect, useRef, useState, useContext } from "react";
 import { FcInvite } from "react-icons/fc";
 import BlurContext from "../context/Playercontext";
+import RequestPopup from "./RequestPopup";
+import Popup from "./Popup";
 
 const InviteFriends = ({ setInviteFriends, socket }) => {
   const inviteRef = useRef(null);
   const [friends, setFriends] = useState([]);
   const token = localStorage.getItem('token');
   const { setisBlur } = useContext(BlurContext);
+  const [message, setMessage] = useState(null);
 
   useEffect(() => {
     const fetchFriends = async () => {
@@ -40,6 +43,7 @@ const InviteFriends = ({ setInviteFriends, socket }) => {
     if (socket) {
       socket.emit('invite', name);
     }
+    setMessage(`Request to ${name} sent successfully!`);
   };
 
   useEffect(() => {
@@ -48,11 +52,13 @@ const InviteFriends = ({ setInviteFriends, socket }) => {
       setisBlur(false);
     };
   }, [setisBlur]);
+  const st = {
+      zIndex:4,
+  };
   const text = friends.length > 0 ? "Invite your friends directly using this feature!" : `You don't have any friends. \n\ Add friends to use this feature!`;
-
   return (
     <div className="friends-page-container">
-      <div className="invite-friends" ref={inviteRef}>
+      <div className="invite-friends" ref={inviteRef} style={st}>
         <div className="search-heading">Invite Friends</div>
         <div className="search-results-container">
           {friends && friends.map(player => (
@@ -63,6 +69,9 @@ const InviteFriends = ({ setInviteFriends, socket }) => {
           ))}
         </div>
         <span style={{color : 'white', fontFamily:'revert', fontWeight:'10'}}>{text}</span>
+        <div className="search-message-container" style={{ width : '100%'  ,bottom : '80px'}}>
+            {message  && <Popup col={1} setAnimation={true} setMessage={setMessage} message={message} />}
+        </div>
       </div>
     </div>
   );

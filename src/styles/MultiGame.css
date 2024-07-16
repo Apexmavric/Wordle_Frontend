@@ -1,0 +1,279 @@
+.live-leaderboard-container{
+    outline: 1px solid rgb(152, 152, 152, 0.5);
+    /* outline: 1px solid red; */
+    position: absolute;
+    left:20px;
+    width: 25%;
+    /* box-sizing: border-box; */
+    /* width:  */
+    display: flex;
+    height: 100%;
+    /* flex-direction: column; */
+    box-sizing: border-box;
+    transform: scale(0.9);
+    /* align-items: center; */
+    justify-content: center;
+    filter: none;
+    /* z-index: ; */
+  }
+  
+  .final-leaderboard{
+    /* outline: 2px solid red; */
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top:0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .leaderboard-animation{
+    opacity: 1;
+    position: relative;
+    height: 400px;
+    /* transform: scale(1.5); */
+    top:0;
+    left:0;
+    animation: leader-ani 2s ease forwards;
+    /* animation-delay: ; */
+    background-color:#181818
+}
+
+
+.alphabet-keys{
+    color: aliceblue;
+    border: 1px solid rgb(255, 255, 255, 0.1);
+    /* outline: 1px solid green; */
+    width: 20px;
+    font-size: 0.8rem;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 3px;
+    text-align: center;
+    margin: 5px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  } 
+  .keyboard{
+    width: 40%;
+    padding: 10px;
+    border: 1px solid rgb(255, 255, 255, 0.1);
+    border-radius: 3px;
+    height: 100%;
+    /* position: absolute; */
+    /* bottom: 10px; */
+    /* outline: 1px solid red; */
+  }
+  
+  .keyboard-row{
+    margin-top: 2px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .title{
+    font-weight: 80;
+    position: absolute;
+    font-size: 40px;
+    /* outline: 1px solid red; */
+    /* right: 130%; */
+    /* margin-top:40px; */
+    /* position: absolute; */
+  }
+  .score{
+    font-size: 15px;
+    font-weight:100;
+    margin-top: 7px;
+}
+.word-row{
+    display: flex;
+    justify-content: center;
+}
+.block{
+    font-size:20px;
+    outline: 1px solid rgb(255, 255, 255, 0.3);
+    height: 20px;
+    width: 20px;
+    text-align: center;
+    color: azure;
+    padding: 20px ;
+    margin: 10px 8px;
+    border-radius: 8px;
+    opacity: 0.8;
+    background-color:#151414;
+    /* box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset; */
+    /* outline: 1px solid red; */
+}
+
+.winner{
+    color: whitesmoke;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    bottom :10%;
+    /* background-color: aqua; */
+    height: 100px;
+}
+.restart{
+    font-size: 30px;
+    padding: 10px;
+    margin-top: 20px;
+  }
+  .wordle-body{
+    display: flex;
+    /* outline: 1px solid red; */
+    position: absolute;
+    top:12%;
+    /* background-color: aqua; */
+    justify-content: center;
+    width:100%;
+    height: 
+  }
+  .winner-text{
+    font-size: 30px;
+    padding: 10px;
+  }
+  .hintandword{
+    position: relative;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    /* outline: 1px solid blue; */
+    top:0px;
+    height: 200%;
+    /* height: 400px; */
+    transform: scale(0.9);
+    /* top: -20%; */
+    /* background-color: blue; */
+  }
+  
+  .hintData::-webkit-scrollbar{
+    display: none;
+  }
+  
+  .Words{
+    margin-bottom: 10px;
+    margin-top: 2px;
+    /* background-color:red; */
+    /* margin-right:400px; */
+    display: block;
+    justify-content: center;
+  }
+  .hint-btn{
+    padding: 5px;
+    background-color: rgb(75, 181, 67);
+    color: azure;
+    width: 100px;
+    border: 1px solid black;
+  }
+  .hints{
+    /* outline: 2px solid red; */
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    top: 0;
+    left: 120%;
+    width: 200px;
+    margin-left: 10px;
+    margin-top: 22px; 
+  }
+  .hintData{
+    /* background-color: azure; */
+    z-index: 100;
+    color: aliceblue;
+    max-height: 300px;
+    overflow-y: scroll;
+    text-align: left;
+    padding: 20px;
+    border-radius: 3px;
+    font-weight: 100;
+    /* margin-top: 10px;
+    margin-left:30px; */
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  }
+
+  .keyboard-container{
+    position: absolute;
+    /* outline: 1px solid red; */
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    bottom: 20px;
+  }
+
+
+  @media screen and (max-height : 600px){
+        .keyboard-container{
+          bottom: 2%;
+          transform: scale(.8);
+        }
+        .menu-title{
+            font-size: 20px;
+        }
+        .wordle-body{
+            top: 5%;
+            transform: scale(0.86);
+        }
+        .live-leaderboard-container{
+          left: -5%;
+        }
+  } 
+
+
+  @media screen and (max-width : 1200px) {
+
+    .live-leaderboard-container{
+            /* left: -5%; */
+            width: 30%;
+        }
+        .keyboard{
+          width: 60%;
+        }
+  }
+
+  @media screen and (max-width : 900px)  {
+      .wordle-body{
+        /* top: %; */
+        transform: scale(0.85);
+      }
+      .keyboard-container{
+        transform: scale(0.85);
+        bottom: -5%;
+      }
+      .live-leaderboard-container{
+        /* background-color: aqua; */
+        left: -5%;
+      }
+  }
+
+
+.time-container{
+  position: absolute;
+  width: 100%;
+  top: 10%;
+  /* top: 20px; */
+  /* outline: 1px solid red; */
+  height: 40px;
+  color: aliceblue;
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  justify-content: space-between;
+  /* justify-content: ; */
+  /* font-size: small; */
+}
+
+.time-line{
+  position: absolute;
+  left: 0px;
+  height: 3px;
+  background-color: antiquewhite;
+  width: 50%;
+  margin-bottom: 10px;
+  transition: width 1s ease , background-color 1s ease;
+}

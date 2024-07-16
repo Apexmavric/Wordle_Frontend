@@ -189,7 +189,7 @@ export default function CreateRoom() {
 
     const handleInvite = (e) => {
         e.preventDefault();
-        
+
         setInvitefriends(true);
     };
 
@@ -198,7 +198,7 @@ export default function CreateRoom() {
             }}>
             {inviteFriends && <InviteFrineds setInviteFriends={setInvitefriends} socket={socket} />}
             <NavBar setisBlur={setisBlur} val={0} wantNavbar={0}/> 
-            <MultiplayerButtons handleClick={handleClick} handleInvite={handleInvite} handleLeave={handleLeave}/>
+            <MultiplayerButtons admin={users.admin} handleClick={handleClick} handleInvite={handleInvite} handleLeave={handleLeave}/>
             {
                 <div className='pop-up-container'>
                    { requestPopup && <RequestPopup message={message} setRequestpopup={setRequestpopup} fetchedToken={fetchedToken} socket={socket} setRoom={setRoom} emitEvent="admin-request-accept" listenEvent="admin-request-authenticated" setFetchedToken={setFetchedtoken}/>}

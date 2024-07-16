@@ -1,14 +1,16 @@
 import '../App.css';
 import KeyBoard from '../components/KeyBoard';
 import NavBar from '../components/NavBar';
-import MultiWords from './MultiWords';
+import MultiWords from '../multiplayer/MultiWords';
 import { useNavigate } from "react-router";
 import { useState, useRef } from 'react';
 import { useEffect } from 'react';
 import {io} from 'socket.io-client';
-import LiveLeaderBoard from './LiveLeaderBoard';
+import LiveLeaderBoard from '../multiplayer/LiveLeaderBoard';
 import Confetti from '../components/Confetti';
 import StandingsText from '../components/StandingsText';
+import Time from '../components/TIme';
+import '../styles/MultiGame.css';
 function Multiplayer() {
   const [iswinner, setisWinner] = useState(JSON.parse(localStorage.getItem('winner')) || false);
   const [hasLost,sethasLost] = useState(JSON.parse(localStorage.getItem('lost')) || false);
@@ -67,8 +69,8 @@ function Multiplayer() {
             if(!localStorage.getItem('hasended'))newSocket.emit('verifyGame', room);
             newSocket.on('bad', (message)=>{
               console.log('Bad function');
-              alert(message);
-              navigate(`/${localStorage.getItem('prev-page')}`);
+            //   alert(message);
+            //   navigate(`/${localStorage.getItem('prev-page')}`);
             })
             if (localStorage.getItem('room')) {
                   setRoom(localStorage.getItem('room'));
@@ -165,15 +167,16 @@ function Multiplayer() {
       navigate(`/${localStorage.getItem('prev-page')}`);
     }
   return (
-    token && (
-    <div>
-    <div className="UserPage" ref={Pageref}>
-       <NavBar score = {time}/>
+    // <div>
+    <div className="MenuPage" ref={Pageref}>
+       <NavBar wantNavbar={0} wantSideBar={0}/>
+          <Time time={time} />
       <div className='wordle-body'>
-          <MultiWords winner = {setisWinner} lost = {sethasLost} restart = {restart} fr = {setRestart} setWord = {setWord} time={time} socket = {socket} hasended = {hasended} sethasended = {sethasended}/>
+          <MultiWords winner = {setisWinner} lost = {sethasLost} restart = {restart} fr = {setRestart} setWord = {setWord} time={time} socket = {socket} hasended = {hasended} sethasended = {sethasended}/> */}
           <LiveLeaderBoard users = {users} guessedPeople={guessedPeople} ref={null} text="Leaderboard"/>         
       </div>
-          { iswinner === false && hasLost === false && <KeyBoard className='keyboard'/>}
+         <div className='keyboard-container'>
+          { iswinner === false && hasLost === false && <KeyBoard/>}
           {(iswinner === true || hasLost === true)  && <div className='winner'>
               {iswinner === true && <div className='winner-text'>You have guessed the word correctly!!</div>}
               {hasLost === true && 
@@ -182,21 +185,19 @@ function Multiplayer() {
                 </div> 
               }
            </div>}  
-      </div>
-      {
-      (JSON.parse(localStorage.getItem('hasended'))) === true && 
-          <div className='final-leaderboard'>
-            <Confetti/>
-            <button className='request-popup-btns back' onClick={handleLeaveGame}>
-              Back 
-            </button>
-            <LiveLeaderBoard users = {users} guessedPeople = {guessedPeople} ref={LeaderBoardref} text = "Final leaderboard"/>
-            <StandingsText/>
-        </div>
-      }
-
-    </div>
-    )
+            </div>
+          {localStorage.getItem('hasended') && JSON.parse(localStorage.getItem('hasended')) === true && (
+            <div className='final-leaderboard'>
+                <Confetti />
+                <button className='request-popup-btns back' onClick={handleLeaveGame}>
+                    Back
+                </button>
+                <LiveLeaderBoard users={users} guessedPeople={guessedPeople} ref={LeaderBoardref} text="Final leaderboard" />
+                <StandingsText />
+            </div>
+        )}
+  </div>
+  
   );
 }
 

@@ -37,7 +37,6 @@ const AccountDetails = () => {
                     <div  onClick={handleLogout}>Logout</div>
                 </Link>
             </div>)}
-            
         </div>
     );
 };

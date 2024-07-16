@@ -3,7 +3,7 @@ import Spinner from "../components/Spinner";
 import InputBar from "../components/InputBar";
 import "../styles/ForgetPassword.css";
 import ButtonTemp from "../components/ButtonTemp";
-
+import { useNavigate } from "react-router";
 
 const Passwordset = ({setCol, setMessage, setAnimation, setPasswordSet})=>{
     const [validOtp, setValidOtp] = useState(null);
@@ -14,6 +14,7 @@ const Passwordset = ({setCol, setMessage, setAnimation, setPasswordSet})=>{
     const [passMessage, setPassMessage]=useState(null);
     const [validPassword, setValidPassword]=useState(null);
     const passchangetoken = localStorage.getItem('pass-change-token');
+    const navigate = useNavigate();
     const handleClick = async()=>{
         try {
             setisLoading(true);
@@ -36,6 +37,7 @@ const Passwordset = ({setCol, setMessage, setAnimation, setPasswordSet})=>{
             setAnimation(false);
             setisLoading(false);
             setPasswordSet(false);
+           navigate('/');
            
         } catch (err) {
             console.log(err);

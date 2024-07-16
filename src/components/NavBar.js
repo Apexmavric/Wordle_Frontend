@@ -6,12 +6,14 @@ import '../styles/Navbar.css';
 import '../styles/Sidebar.css';  // Import the CSS for sidebar animations
 import { useNavigate } from "react-router";
 import BlurContext from "../context/Playercontext";
-export default function NavBar({val, wantNavbar = 1}) {
+
+export default function NavBar({ val, wantNavbar = true, wantSideBar = true }) {
     const [showSidebar, setShowsidebar] = useState(false);
     const [isClosing, setIsClosing] = useState(false);
     const sidebarRef = useRef(null);
-    const {setisBlur, isblur} = useContext(BlurContext);
+    const { setisBlur, isblur } = useContext(BlurContext);
     const navigate = useNavigate();
+
     const handleMenuClick = () => {
         setShowsidebar(true);
         setIsClosing(false);
@@ -31,7 +33,6 @@ export default function NavBar({val, wantNavbar = 1}) {
             document.removeEventListener("mousedown", handleClickOutside);
         }
 
-        // Cleanup event listener on component unmount
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
@@ -43,7 +44,7 @@ export default function NavBar({val, wantNavbar = 1}) {
                 setShowsidebar(false);
                 setIsClosing(false);
                 setisBlur(false);
-            }, 500); 
+            }, 500);
 
             return () => clearTimeout(timer);
         }
@@ -51,21 +52,23 @@ export default function NavBar({val, wantNavbar = 1}) {
 
     return (
         <div className="menu-navbar">
-            {!showSidebar && !isClosing && (
+             {wantSideBar === true && showSidebar === false && isClosing === false && (
                 <div className="menu-logo">
                     <MenuSVgIcon onClick={handleMenuClick} height="100%" width="100%" />
                 </div>
             )}
-            {showSidebar && (
-                <Sidebar ref={sidebarRef}  isClosing={isClosing} />
-            )}
+            {wantSideBar === true && showSidebar === true && (
+                <Sidebar ref={sidebarRef} isClosing={isClosing} />
+            )} 
             <div className={`menu-title ${isblur ? 'blur' : ''}`}>Wordle</div>
             <AccountDetails />
-            {wantNavbar && <div className={`nav-buttons-container ${isblur ? 'blur' : ''}`}>
-               <h3 className={`nav-buttons ${val === 0 ? 'stay': ''}`} onClick={()=>{navigate('/leaderboard')}}>LeaderBoard</h3>
-               <h3 className={`nav-buttons ${val === 1 ? 'stay': ''}`} onClick={()=>{navigate('/play')}}>Play</h3>
-               <h3 className={`nav-buttons ${val === 2 ? 'stay': ''}`} onClick={()=>{navigate('/friends')}}>Friends</h3>
-            </div>}
+            {wantNavbar === true && (
+                <div className={`nav-buttons-container ${isblur ? 'blur' : ''}`}>
+                    <h3 className={`nav-buttons ${val === 0 ? 'stay' : ''}`} onClick={() => { navigate('/leaderboard') }}>LeaderBoard</h3>
+                    <h3 className={`nav-buttons ${val === 1 ? 'stay' : ''}`} onClick={() => { navigate('/play') }}>Play</h3>
+                    <h3 className={`nav-buttons ${val === 2 ? 'stay' : ''}`} onClick={() => { navigate('/friends') }}>Friends</h3>
+                </div>
+            )}
         </div>
     );
 }

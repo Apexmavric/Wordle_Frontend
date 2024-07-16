@@ -91,154 +91,6 @@ a:link{
   width: 100%;
 }
 
-
-.alphabet-keys{
-  color: aliceblue;
-  border: 1px solid rgb(255, 255, 255, 0.1);
-  width: 20px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 10px;
-  padding-right: 10px;
-  border-radius: 3px;
-  text-align: center;
-  margin: 5px;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-} 
-.keyboard{
-  width: 35%;
-  padding: 10px;
-  border: 1px solid rgb(255, 255, 255, 0.1);
-  border-radius: 3px;
-  position: absolute;
-  bottom: 10px;
-}
-
-.keyboard-row{
-  margin-top: 2px;
-  display: flex;
-  justify-content: center;
-}
-
-.title{
-  font-weight: 80;
-  position: absolute;
-  font-size: 40px;
-  /* outline: 1px solid red; */
-  /* right: 130%; */
-  /* margin-top:40px; */
-  /* position: absolute; */
-}
-.score{
-  font-size: 15px;
-  font-weight:100;
-  margin-top: 7px;
-}
-.word-row{
-  display: flex;
-  justify-content: center;
-}
-.block{
-  font-size:20px;
-  outline: 1px solid rgb(255, 255, 255, 0.3);
-  height: 20px;
-  width: 20px;
-  text-align: center;
-  color: azure;
-  padding: 20px ;
-  margin: 10px 8px;
-  border-radius: 8px;
-  opacity: 0.8;
-  background-color:#151414;
-  /* box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset; */
-  /* outline: 1px solid red; */
-}
-
-.winner{
-  color: whitesmoke;
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  bottom :10%;
-  /* background-color: aqua; */
-  height: 100px;
-}
-.restart{
-  font-size: 30px;
-  padding: 10px;
-  margin-top: 20px;
-}
-.wordle-body{
-  display: flex;
-  /* outline: 1px solid red; */
-  position: absolute;
-  top:110px;
-  /* background-color: aqua; */
-  justify-content: center;
-  width:100%;
-  height: 440px;
-}
-.winner-text{
-  font-size: 30px;
-  padding: 10px;
-}
-.hintandword{
-  display: flex;
-  justify-content:center;
-  align-items: center;
-  /* outline: 1px solid blue; */
-  position: relative;
-  /* background-color: blue; */
-}
-
-.hintData::-webkit-scrollbar{
-  display: none;
-}
-
-.Words{
-  margin-bottom: 10px;
-  margin-top: 2px;
-  /* background-color:red; */
-  /* margin-right:400px; */
-  display: block;
-  justify-content: center;
-}
-.hint-btn{
-  padding: 5px;
-  background-color: rgb(75, 181, 67);
-  color: azure;
-  width: 100px;
-  border: 1px solid black;
-}
-.hints{
-  /* outline: 2px solid red; */
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center; 
-  top: 0;
-  left: 120%;
-  width: 200px;
-  margin-left: 10px;
-  margin-top: 22px; 
-}
-.hintData{
-  /* background-color: azure; */
-  z-index: 100;
-  color: aliceblue;
-  max-height: 300px;
-  overflow-y: scroll;
-  text-align: left;
-  padding: 20px;
-  border-radius: 3px;
-  font-weight: 100;
-  /* margin-top: 10px;
-  margin-left:30px; */
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
-}
-
 .profile-image:hover{
   transform: scale(1.1); 
 }
@@ -259,23 +111,7 @@ a:link{
 
 
 
-.live-leaderboard-container{
-  outline: 1px solid rgb(152, 152, 152, 0.5);
-  /* outline: 1px solid red; */
-  position: absolute;
-  left:20px;
-  top:25px;
-  /* box-sizing: border-box; */
-  width: 400px;
-  display: flex;
-  height: 550px;
-  /* flex-direction: column; */
-  box-sizing: border-box;
-  /* align-items: center; */
-  justify-content: center;
-  filter: none;
-  /* z-index: ; */
-}
+
 .guessed {
   background-color: rgb(93, 173, 93);
   border-radius: 1px;
@@ -342,33 +178,6 @@ a:link{
   
 }
 
-.live-leaderboard-container{
-  filter: none;
-}
-
-.final-leaderboard{
-  outline: 2px solid red;
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top:0px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.leaderboard-animation{
-  opacity: 1;
-  position: relative;
-  height: 400px;
-  /* transform: scale(1.5); */
-  top:0;
-  left:0;
-  animation: leader-ani 2s ease forwards;
-  /* animation-delay: ; */
-  background-color:#181818
-}
-
 .spinner-animation-container{
   height: 100%;
   width: 100%; 
@@ -397,10 +206,6 @@ a:link{
       transform: rotate(360deg);
     }
 }
-
-
-
-
 
 .back{
   left: 10%;

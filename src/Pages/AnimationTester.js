@@ -1,36 +1,204 @@
-import { useEffect, useRef, useState } from "react";
-import LeaderBoard from "../components/Leaderboard";
+import '../App.css';
+import KeyBoard from '../components/KeyBoard';
+import NavBar from '../components/NavBar';
+import MultiWords from '../multiplayer/MultiWords';
+import { useNavigate } from "react-router";
+import { useState, useRef } from 'react';
+import { useEffect } from 'react';
+import {io} from 'socket.io-client';
+import LiveLeaderBoard from '../multiplayer/LiveLeaderBoard';
+import Confetti from '../components/Confetti';
+import StandingsText from '../components/StandingsText';
+import Time from '../components/TIme';
+import '../styles/MultiGame.css';
+function Multiplayer() {
+  const [iswinner, setisWinner] = useState(JSON.parse(localStorage.getItem('winner')) || false);
+  const [hasLost,sethasLost] = useState(JSON.parse(localStorage.getItem('lost')) || false);
+  const [restart,setRestart] = useState(JSON.parse(localStorage.getItem('restart')) || false);
+  const [word,setWord] = useState("");
+  const [time, setTime] = useState(0);
+  const [socket, setSocket] = useState('');
+  const [room, setRoom] = useState(localStorage.getItem('room'));
+  const [users, setUsers] = useState([]);
+  const [guessedPeople, setGuessedPeople] = useState([]);
+  const[nextround, setNextRound] = useState(0);
+  const [hasended, sethasended] = useState(false);
+  const LiveLeaderBoardAnimation = useRef(null);
+  const navigate = useNavigate();
+  const Pageref = useRef(null);
+  const LeaderBoardref = useRef(null);
+  const name = localStorage.getItem('name');
+  const token = localStorage.getItem('token');
+  useEffect(()=>{
+    const verify_token = async()=>{
+        try {
+            const response = await fetch(process.env.REACT_APP_BACKEND_URL +"/api/v1/verify/verify_token", {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+            });
+            let data = await response.json();
+            console.log(data);
+            if(data.msg === 'Authentication Invalid')
+            {
+                localStorage.clear();
+                alert('Your session has expired try logging in again !!');
+                navigate('/');
 
-const AnimationTester = () => {
-    const backgroundRef = useRef(null);
+            }   
+        } catch (error) {
+            console.error(error);
+        } 
+    }
+    verify_token();
+}, [])
+
     useEffect(() => {
-        const currentBackgroundRef = backgroundRef.current;
-        if(currentBackgroundRef)
-        {
-            currentBackgroundRef.classList.add('back-animate');
+      const newSocket = io(process.env.REACT_APP_BACKEND_URL,{
+        auth:{
+            token : token
         }
-        return () => {
-            if (currentBackgroundRef) {
-                currentBackgroundRef.classList.remove('final-state');
+    });
+        setSocket(newSocket);
+        newSocket.on('connect', () => {
+            setSocket(newSocket);
+            newSocket.emit('refresh-ids', name);
+            console.log(newSocket.id);
+            if(!localStorage.getItem('hasended'))newSocket.emit('verifyGame', room);
+            newSocket.on('bad', (message)=>{
+              console.log('Bad function');
+            //   alert(message);
+            //   navigate(`/${localStorage.getItem('prev-page')}`);
+            })
+            if (localStorage.getItem('room')) {
+                  setRoom(localStorage.getItem('room'));
+                  newSocket.emit('join-room', localStorage.getItem('room'), name);
+                  newSocket.on('users-live', (e) => {
+                    setUsers(e);
+                  });
+                  newSocket.emit('fetch-live-players-info', localStorage.getItem('room'));
+                  newSocket.on('players-live-info', (e)=>{
+                    setGuessedPeople(e);
+                  });
+                  newSocket.emit('fetch-time',room);
+                  newSocket.on('get-time', ({Time})=>{
+                    if(Time != NaN) setTime(Time);
+                  })
+                }
+                newSocket.on('start-next-round', (e)=>{
+                  setNextRound(prev=>prev+1);
+                  sethasended(true);
+                  setTime(e);
+            })
+            newSocket.on('Round-completed', ()=>{
+              localStorage.removeItem('row');
+              localStorage.removeItem('val');
+              localStorage.removeItem('isGreen');
+              localStorage.removeItem('useHint');
+              localStorage.setItem('winner', false);
+              localStorage.setItem('lost', false);
+              localStorage.setItem('restart', false);
+              localStorage.removeItem('hints');
+            })
+            newSocket.on('game-ended' ,()=>{
+              sethasended(true);
+              localStorage.setItem('hasended', true);
+              localStorage.removeItem('start');
+              
+            })
+            if(JSON.parse(localStorage.getItem('hasended')) === true)
+            { 
+              const Page = Pageref.current;
+              const LeaderBoard = LeaderBoardref.current;
+              if(Page)
+              {   
+                  Page.classList.add('back-animate');
+              }
+              if(LeaderBoard)
+              { 
+                LeaderBoard.classList.add('leaderboard-animation');
+              }
             }
-        };
-    }, [backgroundRef]);
+          });
+          return()=>{
+            if(Pageref)
+            {
+                const Page = Pageref.current;
+                if(Page)
+                {   
+                    Page.classList.remove('back-animate');
+                } 
+            }
+            if(LeaderBoardref)
+            {
+                const LeaderBoard = LeaderBoardref.current; 
+                if(LeaderBoard)
+                {
+                  LeaderBoard.classList.remove('leaderboard-animation');
+                }
+              }
+              newSocket.off('verifyGame');
+          }
+    }, [hasended]);
+
     
-    return (
-        <div className="animation-tester-container">
-            <div className="animation-background" ref={backgroundRef}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed ullamcorper morbi tincidunt ornare massa eget. Urna et pharetra pharetra massa. Ac feugiat sed lectus vestibulum mattis. Feugiat nisl pretium fusce id velit. Nullam non nisi est sit amet facilisis magna etiam tempor. Nisi lacus sed viverra tellus in. Fames ac turpis egestas maecenas. Cum sociis natoque penatibus et magnis dis parturient. Augue lacus viverra vitae congue eu consequat ac felis. Suspendisse interdum consectetur libero id faucibus nisl tincidunt eget nullam. Molestie a iaculis at erat.
+    useEffect(() => {
+      const timerInterval = setInterval(() => {
+        setTime(prevTime => {
+          const newTime = prevTime - 1;
+          if (newTime <= 0) {
+            clearInterval(timerInterval); 
+          }
+          return newTime;
+        });
+      }, 1000);
+      return () => {
+        clearInterval(timerInterval);
+      };
+    }, [nextround]); 
 
-            Arcu odio ut sem nulla pharetra diam sit. Pellentesque nec nam aliquam sem et. Purus gravida quis blandit turpis cursus in hac. Aliquam ultrices sagittis orci a scelerisque purus. A pellentesque sit amet porttitor eget dolor. Venenatis tellus in metus vulputate eu scelerisque felis imperdiet. Duis ultricies lacus sed turpis tincidunt id aliquet risus. Massa sed elementum tempus egestas sed sed. Amet aliquam id diam maecenas ultricies mi eget. Diam ut venenatis tellus in metus vulputate. Gravida rutrum quisque non tellus. Amet venenatis urna cursus eget nunc scelerisque. Dictum non consectetur a erat nam at lectus urna duis. Ac tortor vitae purus faucibus ornare suspendisse sed nisi. Nulla facilisi etiam dignissim diam quis enim lobortis. Dui ut ornare lectus sit. Quis commodo odio aenean sed adipiscing diam.
-
-            Id eu nisl nunc mi ipsum faucibus vitae. A cras semper auctor neque vitae tempus. Donec pretium vulputate sapien nec sagittis aliquam. Euismod in pellentesque massa placerat duis ultricies lacus sed turpis. Id velit ut tortor pretium viverra suspendisse potenti. Velit dignissim sodales ut eu sem integer vitae justo. Facilisi etiam dignissim diam quis enim lobortis scelerisque fermentum dui. Tincidunt nunc pulvinar sapien et ligula. In est ante in nibh mauris cursus mattis molestie. Risus ultricies tristique nulla aliquet. Tempor commodo ullamcorper a lacus vestibulum sed arcu non odio. Laoreet suspendisse interdum consectetur libero id. Eu turpis egestas pretium aenean pharetra magna ac placerat vestibulum. Sit amet justo donec enim diam vulputate ut. Cursus euismod quis viverra nibh cras pulvinar mattis nunc. Tortor pretium viverra suspendisse potenti nullam ac. Pellentesque habitant morbi tristique senectus et. Lacus viverra vitae congue eu consequat ac felis. Elit eget gravida cum sociis natoque penatibus et. Blandit massa enim nec dui nunc mattis enim ut tellus.
-
-            Nam at lectus urna duis convallis convallis tellus id interdum. Sollicitudin aliquam ultrices sagittis orci a. Id ornare arcu odio ut. Praesent tristique magna sit amet. Quis auctor elit sed vulputate. Tincidunt augue interdum velit euismod in pellentesque massa placerat duis. Massa placerat duis ultricies lacus sed. Morbi tempus iaculis urna id volutpat lacus laoreet non. Accumsan lacus vel facilisis volutpat est velit. Dui ut ornare lectus sit amet est. Condimentum vitae sapien pellentesque habitant morbi tristique. Gravida quis blandit turpis cursus in. Nisl nunc mi ipsum faucibus. At quis risus sed vulputate odio ut. Molestie at elementum eu facilisis sed. Interdum posuere lorem ipsum dolor. Praesent tristique magna sit amet purus gravida quis. Malesuada fames ac turpis egestas sed. A diam sollicitudin tempor id eu. Ipsum suspendisse ultrices gravida dictum.
-
-            Sed adipiscing diam donec adipiscing tristique risus nec. Ante in nibh mauris cursus mattis molestie a iaculis. Sapien nec sagittis aliquam malesuada bibendum arcu vitae elementum. Risus quis varius quam quisque id diam vel quam. Quam vulputate dignissim suspendisse in est. Eget nullam non nisi est sit amet facilisis. Eleifend donec pretium vulputate sapien nec sagittis. Neque ornare aenean euismod elementum nisi quis eleifend quam adipiscing. In est ante in nibh mauris cursus mattis molestie a. Enim ut sem viverra aliquet eget sit amet tellus. Pulvinar mattis nunc sed blandit libero. Ipsum nunc aliquet bibendum enim facilisis gravida neque convallis a. Dolor sit amet consectetur adipiscing. Ut ornare lectus sit amet est placerat. Felis donec et odio pellentesque diam volutpat commodo sed egestas.
+    const handleLeaveGame = ()=>{
+      if(socket)
+      {
+          socket.emit('leave-game', room);
+      }
+      navigate(`/${localStorage.getItem('prev-page')}`);
+    }
+  return (
+    // <div>
+    <div className="MenuPage" ref={Pageref}>
+       <NavBar wantNavbar={0} wantSideBar={0}/>
+          <Time time={time} />
+      <div className='wordle-body'>
+          <MultiWords winner = {setisWinner} lost = {sethasLost} restart = {restart} fr = {setRestart} setWord = {setWord} time={time} socket = {socket} hasended = {hasended} sethasended = {sethasended}/> */}
+          <LiveLeaderBoard users = {users} guessedPeople={guessedPeople} ref={null} text="Leaderboard"/>         
+      </div>
+         <div className='keyboard-container'>
+          { iswinner === false && hasLost === false && <KeyBoard/>}
+          {(iswinner === true || hasLost === true)  && <div className='winner'>
+              {iswinner === true && <div className='winner-text'>You have guessed the word correctly!!</div>}
+              {hasLost === true && 
+                <div className='loser' style={{display : "flex", flexDirection:"column", alignItems : "center"} }>
+                    <div className='loser-text' style={{margin : "5px", fontSize :"30px"}}>Opps!! You ran out of moves</div>
+                </div> 
+              }
+           </div>}  
             </div>
-        </div>
-    )
-
+          {localStorage.getItem('hasended') && JSON.parse(localStorage.getItem('hasended')) === true && (
+            <div className='final-leaderboard'>
+                <Confetti />
+                <button className='request-popup-btns back' onClick={handleLeaveGame}>
+                    Back
+                </button>
+                <LiveLeaderBoard users={users} guessedPeople={guessedPeople} ref={LeaderBoardref} text="Final leaderboard" />
+                <StandingsText />
+            </div>
+        )}
+  </div>
+  
+  );
 }
-export default AnimationTester;
+
+export default Multiplayer;

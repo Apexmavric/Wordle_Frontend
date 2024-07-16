@@ -38,8 +38,7 @@
     width: 50%;
     text-align: center;
     /* left: 50%; */
-    top:40%;
-    z-index: 5;
+    top:20%;
     animation: slow-load .3s ease;
     /* outline: 1px solid red; */
   }
